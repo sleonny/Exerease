@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import Auth from '../../utils/auth';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const history = useHistory();
 
   const containerStyle = {
     maxWidth: '400px',
@@ -38,9 +40,11 @@ const Login = () => {
     cursor: 'pointer',
   };
 
-  const buttonHoverStyle = {
-    ...buttonStyle,
-    backgroundColor: '#0056b3',
+  const handleLogout = () => {
+    Auth.logout();
+
+    // Redirect to the home page
+    history.push('/');
   };
 
   return (
@@ -72,6 +76,20 @@ const Login = () => {
                 </Link>
               </p>
             )}
+
+            {Auth.loggedIn() ? (
+              <p>
+                Logged in as {Auth.getProfile().username}.{' '}
+                <button onClick={handleLogout}>Logout</button>
+              </p>
+            ) : (
+              <p>
+                Need to create an account?{' '}
+                <Link to="#" onClick={() => setIsLogin(false)}>
+                  Sign Up
+                </Link>
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -80,5 +98,7 @@ const Login = () => {
 };
 
 export default Login;
+
+
 
 
