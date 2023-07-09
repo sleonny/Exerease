@@ -44,11 +44,15 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li style={navigationItemStyle}>
-            <Link to="/about">About</Link>
+            <Link to="/exercise">Workout</Link>
           </li>
           <li style={navigationItemStyle}>
-            <Link to="/contact">Contact</Link>
+            <Link to="/profile">Profile</Link>
           </li>
+          <li style={navigationItemStyle}>
+            <Link to="/History">History</Link>
+          </li>
+          
           {/* Rest of the navigation links */}
         </ul>
       </nav>
