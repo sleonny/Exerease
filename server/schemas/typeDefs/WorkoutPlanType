@@ -1,0 +1,26 @@
+const { gql } = require("apollo-server-express");
+
+const WorkoutPlanType = gql`
+  type Exercise {
+    name: String!
+    description: String
+    sets: Int
+    reps: Int
+    duration: Int
+  }
+
+  type WorkoutPlan {
+    id: ID!
+    name: String!
+    description: String
+    exercises: [Exercise]
+    duration: String!
+  }
+
+  extend type Query {
+    workoutPlan(id: ID!): WorkoutPlan
+    workoutPlans: [WorkoutPlan]
+  }
+`;
+
+module.exports = WorkoutPlanType;

@@ -1,0 +1,27 @@
+const axios = require("axios");
+const { WorkoutPlan } = require("../../models/WorkoutPlan.js");
+
+const resolvers = {
+  Query: {
+    workoutPlan: async (parent, { id }, context) => {
+      return await WorkoutPlan.FindById(id);
+    },
+    workoutPlans: async (parent, args, contexxt) => {
+      return await WorkoutPlan.find({});
+    },
+  },
+  WorkoutPlan: {
+    exercises: async (workoutPlan, args, context) => {
+      const response = await axios.get(OUTSIDEAPI);
+      return response.data.map((exercise) => ({
+        name: exercise.name,
+        description: exercise.description,
+        sets: exercise.sets,
+        reps: exercise.reps,
+        duration: exercise.duration,
+      }));
+    },
+  },
+};
+
+module.exports = resolvers;
