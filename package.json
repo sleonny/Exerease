@@ -15,5 +15,10 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "Express": "^3.0.1",
+    "graphql": "^16.7.1",
+    "node": "^20.4.0"
   }
 }
