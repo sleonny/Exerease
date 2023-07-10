@@ -1,88 +1,94 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import { Link, useHistory } from 'react-router-dom';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import Auth from '../../utils/auth';
 
-import Auth from '../utils/auth';
+const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const history = useHistory();
 
-const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
-
-  // update state based on form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+  const containerStyle = {
+    maxWidth: '400px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: '#f5f5f5',
+    borderRadius: '5px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+    backgroundImage: 'url(/workout-background.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   };
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-    try {
-      const { data } = await login({
-        variables: { ...formState },
-      });
+  const inputStyle = {
+    width: '100%',
+    padding: '10px',
+    marginBottom: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '3px',
+  };
 
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
-    }
+  const buttonStyle = {
+    display: 'block',
+    width: '100%',
+    padding: '10px',
+    border: 'none',
+    borderRadius: '3px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    fontSize: '16px',
+    cursor: 'pointer',
+  };
 
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
+  const handleLogout = () => {
+    Auth.logout();
+
+    // Redirect to the home page
+    history.push('/');
   };
 
   return (
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
+        <div style={containerStyle}>
+          <div className="card-header bg-dark text-light p-2">
+            {isLogin ? 'Log In' : 'Sign Up'}
+          </div>
           <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
+            {isLogin ? (
+              <LoginForm inputStyle={inputStyle} buttonStyle={buttonStyle} />
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
+              <SignupForm inputStyle={inputStyle} buttonStyle={buttonStyle} />
             )}
 
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
+            {isLogin ? (
+              <p>
+                Don't have an account?{' '}
+                <Link to="#" onClick={() => setIsLogin(false)}>
+                  Sign Up
+                </Link>
+              </p>
+            ) : (
+              <p>
+                Already have an account?{' '}
+                <Link to="#" onClick={() => setIsLogin(true)}>
+                  Log In
+                </Link>
+              </p>
+            )}
+
+            {Auth.loggedIn() ? (
+              <p>
+                Logged in as {Auth.getProfile().username}.{' '}
+                <button onClick={handleLogout}>Logout</button>
+              </p>
+            ) : (
+              <p>
+                Need to create an account?{' '}
+                <Link to="#" onClick={() => setIsLogin(false)}>
+                  Sign Up
+                </Link>
+              </p>
             )}
           </div>
         </div>
@@ -92,3 +98,7 @@ const Login = (props) => {
 };
 
 export default Login;
+
+
+
+
