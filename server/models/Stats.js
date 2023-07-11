@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const workoutStatistics = new Schema({
+const workoutStatsSchema = new mongoose.Schema({
     workoutId: { 
         type: Schema.Types.ObjectId, 
         ref: 'Exercises' ,
