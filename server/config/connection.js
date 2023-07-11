@@ -1,12 +1,24 @@
 const mongoose = require("mongoose");
-
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/exerease"
-);
-
 const express = require('express');
 const router = express.Router();
 
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://4000/exereaseDB"
+);
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost/mydatabase', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server started on port 4000');
+});
 // Example route to retrieve data from MongoDB
 router.get('/data', (req, res) => {
   // Use your Mongoose model to fetch data from MongoDB
