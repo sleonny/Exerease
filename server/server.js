@@ -22,7 +22,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.send('Hello World')
+  res.sendFile(path.join(__dirname, '../client/public/index.html'));
 });
 
 
@@ -38,6 +39,6 @@ const startApolloServer = async () => {
     })
   })
   };
-  
+  app.listen(3001)
 // Call the async function to start the server
   startApolloServer();
