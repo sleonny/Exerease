@@ -1,4 +1,4 @@
-const { mergeTypeDefs } = require("@apollo/client");
+const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
 
 const goalType = require("./typeDefs/GoalType");
 const userType = require("./typeDefs/UserType");
@@ -11,8 +11,6 @@ const typeDefs = mergeTypeDefs([
   workoutHistoryType,
   workoutPlanType,
 ]);
-
-const { mergeResolvers } = require("@graphql-tools/merge");
 
 const goalResolver = require("./Resolvers/GoalResolver");
 const userResolver = require("./Resolvers/GoalResolver");

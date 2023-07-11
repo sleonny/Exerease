@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server-express");
 
-const WorkoutPlanType = gql`
+const typeDefs = gql`
   type Exercise {
     name: String!
     description: String
@@ -30,7 +30,6 @@ const WorkoutPlanType = gql`
     equipment: String
     difficulty: String
     instructions: String
-
   }
 
   extend type Query {
@@ -40,4 +39,4 @@ const WorkoutPlanType = gql`
   }
 `;
 
-module.exports = WorkoutPlanType;
+module.exports = typeDefs;
