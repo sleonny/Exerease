@@ -35,7 +35,7 @@ const workoutStatsSchema = new mongoose.Schema({
     },
   });
   
-  const WorkoutStatistics = mongoose.model('WorkoutStatistics', workoutStatistics);
+  const WorkoutStatistics = mongoose.model('WorkoutStatistics', workoutStatsSchema);
 
   module.exports = WorkoutStatistics
   
