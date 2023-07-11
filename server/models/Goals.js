@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const workoutGoals = new Schema({
+const workoutGoalSchema = new mongoose.Schema({
 
     userId: { 
          type: Schema.Types.ObjectId,
@@ -24,7 +24,7 @@ const workoutGoals = new Schema({
     },
   });
   
-  const WorkoutGoals = mongoose.model('WorkoutGoals', workoutGoals);
+  const WorkoutGoals = mongoose.model('WorkoutGoals', workoutGoalSchema);
 
   module.exports = WorkoutGoals;
   
