@@ -5,11 +5,21 @@ const Schema = mongoose.Schema;
 const workoutStatistics = new Schema({
     workoutId: { 
         type: Schema.Types.ObjectId, 
-        ref: 'Exercises' 
+        ref: 'Exercises' ,
+        
     },
     userId: {
          type: Schema.Types.ObjectId, 
-         ref: 'User' 
+         ref: 'User' ,
+
+    },
+    age: {
+        type: Number,
+        ref: 'User',
+    },
+    weight: {
+        type: Number,
+        required: true
     },
     duration: { 
         type: Number, 
