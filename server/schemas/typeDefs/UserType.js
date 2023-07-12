@@ -1,32 +1,31 @@
-// const { gql } = require('apollo-server-express');
+ const { gql } = require('apollo-server-express');
 
-// const typeDefs = gql`
-//   type Profile {
-//     _id: ID
-//     name: String
-//     email: String
-//     password: String
-//     skills: [String]!
-//   }
+ const typeDefs = gql`
+  type User {
+     _id: ID
+     name: String
+     email: String
+     password: String
+     skills: [String]!
+   }
 
-//   type Auth {
-//     token: ID!
-//     profile: Profile
-//   }
+   type Auth {
+     token: ID!
+     profile: Profile
+   }
 
-//   type Query {
-//     profiles: [Profile]!
-//     profile(profileId: ID!): Profile
-//   }
+   type Query {
+        users: [Profile]!
+        user(profileId: ID!): Profile
+   }
 
-//   type Mutation {
-//     addProfile(name: String!, email: String!, password: String!): Auth
-//     login(email: String!, password: String!): Auth
+   type Mutation {
+      addUser(name: String!, email: String!, password: String!): Auth
+      login(email: String!, password: String!): Auth
 
-//     addSkill(profileId: ID!, skill: String!): Profile
-//     removeProfile(profileId: ID!): Profile
-//     removeSkill(profileId: ID!, skill: String!): Profile
-//   }
-// `;
+      addUser(userId: ID!, skill: String!): User
+      removeUser(profileId: ID!, skill: String!): User
+   }
+ `;
 
-// module.exports = typeDefs;
+ module.exports = typeDefs;
