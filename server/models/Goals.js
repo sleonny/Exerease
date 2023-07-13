@@ -11,8 +11,6 @@ const workoutGoalSchema = new mongoose.Schema({
     goal: {
          type: String, 
          required: true,
-         minlength: 1,
-         maxlength: 150, 
         },
     target: { 
         type: Number, 

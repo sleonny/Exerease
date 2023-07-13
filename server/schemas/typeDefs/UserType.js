@@ -6,17 +6,17 @@
      name: String
      email: String
      password: String
-     skills: [String]!
+     
    }
 
    type Auth {
      token: ID!
-     profile: Profile
+     user: User
    }
 
    type Query {
-        users: [Profile]!
-        user(profileId: ID!): Profile
+        users: [User]!
+        user(userId: ID!): User
    }
 
    type Mutation {

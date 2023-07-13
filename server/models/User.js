@@ -1,7 +1,7 @@
  const { Schema, model } = require('mongoose');
  const bcrypt = require('bcrypt');
 
- const profileSchema = new Schema({
+ const userSchema = new Schema({
    user: {
      type: String,
      required: true,
@@ -30,6 +30,6 @@
 
 
 
-const Profile = model('Profile', profileSchema);
+const Profile = model('User', userSchema);
 
-module.exports = Profile;
+module.exports = User;
