@@ -6,14 +6,13 @@ const typeDefs = gql`
     type: String
     date: String
     duration: Int
-
   }
 
   input workoutGoalInput {
     type: String
     date: String
-    minlength: 1
-    maxlength: 100
+    minlength: Int
+    maxlength: Int
     duration: Int
     totalBody: String
     weight: Int

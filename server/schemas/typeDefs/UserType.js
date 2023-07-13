@@ -20,11 +20,11 @@
    }
 
    type Mutation {
-      addUser(name: String!, email: String!, password: String!): Auth
+      registerUser(name: String!, email: String!, password: String!): Auth
       login(email: String!, password: String!): Auth
 
       addUser(userId: ID!, skill: String!): User
-      removeUser(profileId: ID!, skill: String!): User
+      addUserSkill(profileId: ID!, skill: String!): User
    }
  `;
 
