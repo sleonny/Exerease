@@ -23,8 +23,8 @@
       addUser(name: String!, email: String!, password: String!): Auth
       login(email: String!, password: String!): Auth
 
-      addUser(userId: ID!, skill: String!): User
-      removeUser(profileId: ID!, skill: String!): User
+      addUser(userId: ID!, name: String!, email:String!, password:String!): User
+      removeUser(userId: ID!, name: String!, email:String!, password:String!): User
    }
  `;
 
