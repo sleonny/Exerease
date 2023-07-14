@@ -11,13 +11,15 @@ const workoutGoalSchema = new mongoose.Schema({
     goal: {
          type: String, 
          required: true,
-         minlength: Int,
-         maxlength: Int,
-         duration: Int,
-         totalBody: String,
-         weight: Int,
-         caloriesBurned: Int
+    },
+    weight: {
+        type: Number,
+        required: true 
         },
+    totalBody: {
+        type: String,
+        required: true
+    },
     target: { 
         type: Number, 
         required: true 
