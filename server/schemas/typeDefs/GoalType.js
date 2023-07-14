@@ -6,19 +6,11 @@ const typeDefs = gql`
     type: String
     date: String
     duration: Int
-
-  }
-
-  input workOutGoals {
-    type: String
-    date: String
-    minlength: Int
-    maxlength: Int
-    duration: Int
     totalBody: String
     weight: Int
-    caloriesBurned: Int
+
   }
+
 
   type Query {
     workoutGoal(id: ID!): WorkoutGoal
