@@ -22,6 +22,8 @@ const server = new ApolloServer({
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
+app.use("/images", express.static(path.join(__dirname,"../client/images")))
+
 
 // Middleware for Express and Apollo
 server.applyMiddleware({ app });
