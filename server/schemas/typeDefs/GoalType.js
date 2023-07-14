@@ -8,7 +8,7 @@ const typeDefs = gql`
     duration: Int
   }
 
-  input workoutGoalInput {
+  input workOutGoals {
     type: String
     date: String
     minlength: Int
@@ -25,8 +25,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createWorkoutGoal(input: WorkoutGoalInput!): WorkoutGoal
-    updateWorkoutGoal(id: ID!, input: WorkoutGoalInput!): WorkoutGoal
+    createWorkoutGoal(input: workOutGoals!): WorkoutGoal
+    updateWorkoutGoal(id: ID!, input: WorkOutGoals!): WorkoutGoal
     deleteWorkoutGoal(id: ID!): WorkoutGoal
   }
 `;
