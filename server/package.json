@@ -8,7 +8,6 @@
     "watch": "nodemon",
     "seed": "node seeders/seed.js",
     "devStart": "nodemon server.js"
-
   },
   "keywords": [],
   "author": "",
@@ -26,6 +25,7 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
     "node-fetch": "^3.3.1",
+    "path": "^0.12.7",
     "react": "^18.2.0"
   },
   "devDependencies": {
