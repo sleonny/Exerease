@@ -5,7 +5,7 @@ const { User } = require("../../models/User.js");
 
 
 
-const userResolvers = {
+const resolvers = {
     Query: {
       
       user: async (parent, args, context) => {
@@ -17,7 +17,18 @@ const userResolvers = {
       },
     },
     
+    Mutation: {
+      createUser: async (parent, { input }, context) => {
+        return await User.create(input);
+      },
+      updateUser: async (parent, { id, input }, context) => {
+        return await User.findByIdAndUpdate(id, input, { new: true });
+      },
+      deleteUser: async (parent, { id }, context) => {
+        return await User.findByIdAndDelete(id);
+      },
+    }, 
   };
   
-  module.exports = userResolvers;
+  module.exports = resolvers;
   
