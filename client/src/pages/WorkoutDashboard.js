@@ -1,10 +1,19 @@
-import React from 'react';
+<<<<<<< HEAD
+import React from "react";
+import { useQuery } from "@apollo/client";
+=======
+import React, {useState} from 'react';
 import { useQuery } from '@apollo/client';
+>>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
 
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
-import { GET_WORKOUT_HISTORY } from './graphql/queries'; // Import your GraphQL query
+<<<<<<< HEAD
+import { GET_WORKOUT_HISTORY } from "./graphql/queries"; // Import your GraphQL query
+=======
+import { GET_WORKOUT_HISTORY } from '../utils/queries'; 
+>>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
 
 function WorkoutDashboard() {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -30,9 +39,11 @@ function WorkoutDashboard() {
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
           weekends={true}
-          events={[
-            // Your workout events data
-          ]}
+          events={
+            [
+              // Your workout events data
+            ]
+          }
           dateClick={handleDateClick}
         />
       </div>

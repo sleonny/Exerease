@@ -30,6 +30,6 @@
 
 
 
-const Profile = model('User', userSchema);
-
+ const User = model('User', userSchema); // Corrected model name
+ 
 module.exports = User;

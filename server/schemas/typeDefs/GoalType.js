@@ -1,33 +1,36 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type workoutGoal {
+  type WorkoutGoal {
     id: ID
     type: String
     date: String
     duration: Int
+
   }
 
-  input workOutGoals {
+<<<<<<< HEAD
+  input workoutGoalInput {
+=======
+  input WorkoutGoalInput {
+>>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
     type: String
     date: String
-    minlength: Int
-    maxlength: Int
     duration: Int
     totalBody: String
     weight: Int
-    caloriesBurned: Int
-  }
-
-  type Query {
-    workoutGoal(id: ID!): WorkoutGoal
-    workoutGoals: [WorkoutGoal]
   }
 
   type Mutation {
-    createWorkoutGoal(input: workOutGoals!): WorkoutGoal
-    updateWorkoutGoal(id: ID!, input: WorkOutGoals!): WorkoutGoal
+<<<<<<< HEAD
+    createworkoutGoal(input: workoutGoalInput!): workoutGoal
+    updateworkoutGoal(id: ID!, input: workoutGoalInput!): workoutGoal
+    deleteworkoutGoal(id: ID!): workoutGoal
+=======
+    createWorkoutGoal(input: WorkoutGoalInput!): WorkoutGoal
+    updateWorkoutGoal(id: ID!, input: WorkoutGoalInput!): WorkoutGoal
     deleteWorkoutGoal(id: ID!): WorkoutGoal
+>>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
   }
 `;
 
