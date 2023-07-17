@@ -13,7 +13,7 @@ const typeDefs = mergeTypeDefs([
 ]);
 
 const goalResolver = require("./Resolvers/GoalResolver");
-const userResolver = require("./Resolvers/GoalResolver");
+const userResolver = require("./Resolvers/UserResolver");
 const workoutHistoryResolver = require("./Resolvers/WorkoutHistoryResolver");
 const workoutPlanResolver = require("./Resolvers/WorkoutPlanResolver");
 
