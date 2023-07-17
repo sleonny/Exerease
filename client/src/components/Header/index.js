@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from './logo.png';
 
 const Header = () => {
   const headerStyle = {
@@ -35,7 +34,6 @@ const Header = () => {
   return (
     <header style={headerStyle}>
       <div style={logoStyle}>
-        <img src={logo} alt="Logo" style={logoImgStyle} />
         <h1>My Workout App</h1>
       </div>
       <nav style={navigationStyle}>
