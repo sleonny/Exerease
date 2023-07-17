@@ -1,5 +1,5 @@
 const { gql } = require("apollo-server-express");
-const { User } = require("../../models/User.js");
+const User = require("../../models/User.js"); // Corrected import
 
 
 
