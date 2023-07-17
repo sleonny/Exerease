@@ -1,5 +1,6 @@
 const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
 
+
 const goalType = require("./typeDefs/GoalType");
 const userType = require("./typeDefs/UserType");
 const workoutHistoryType = require("./typeDefs/WorkoutHistoryType");
