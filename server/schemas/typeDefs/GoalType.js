@@ -8,27 +8,25 @@ const typeDefs = gql`
     duration: Int
     totalBody: String
     weight: Int
-
   }
-
 
   type Query {
-    workoutGoal(id: ID!): WorkoutGoal
-    workoutGoals: [WorkoutGoal]
+    workoutGoal(id: ID!): workoutGoal
+    workoutGoals: [workoutGoal]
   }
 
-  input workoutGoalInput{
+  input workoutGoalInput {
     type: String
     date: String
-    duration:Int
+    duration: Int
     totalBody: String
     weight: Int
   }
 
   type Mutation {
-    createWorkoutGoal(input: workOutGoalInput!): workoutGoal
-    updateWorkoutGoal(id: ID!, input: workoutGoalInput!): workoutGoal
-    deleteWorkoutGoal(id: ID!): workoutGoal
+    createworkoutGoal(input: workoutGoalInput!): workoutGoal
+    updateworkoutGoal(id: ID!, input: workoutGoalInput!): workoutGoal
+    deleteworkoutGoal(id: ID!): workoutGoal
   }
 `;
 
