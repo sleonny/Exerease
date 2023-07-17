@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
-import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const history = useHistory();
 
   const containerStyle = {
     maxWidth: '400px',
@@ -43,8 +40,6 @@ const Login = () => {
   const handleLogout = () => {
     Auth.logout();
 
-    // Redirect to the home page
-    history.push('/');
   };
 
   return (
@@ -55,12 +50,6 @@ const Login = () => {
             {isLogin ? 'Log In' : 'Sign Up'}
           </div>
           <div className="card-body">
-            {isLogin ? (
-              <LoginForm inputStyle={inputStyle} buttonStyle={buttonStyle} />
-            ) : (
-              <SignupForm inputStyle={inputStyle} buttonStyle={buttonStyle} />
-            )}
-
             {isLogin ? (
               <p>
                 Don't have an account?{' '}
