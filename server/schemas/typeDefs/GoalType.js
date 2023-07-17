@@ -17,10 +17,18 @@ const typeDefs = gql`
     workoutGoals: [WorkoutGoal]
   }
 
+  input workoutGoalInput{
+    type: String
+    date: String
+    duration:Int
+    totalBody: String
+    weight: Int
+  }
+
   type Mutation {
-    createWorkoutGoal(input: workOutGoals!): WorkoutGoal
-    updateWorkoutGoal(id: ID!, input: WorkOutGoals!): WorkoutGoal
-    deleteWorkoutGoal(id: ID!): WorkoutGoal
+    createWorkoutGoal(input: workOutGoalInput!): workoutGoal
+    updateWorkoutGoal(id: ID!, input: workoutGoalInput!): workoutGoal
+    deleteWorkoutGoal(id: ID!): workoutGoal
   }
 `;
 
