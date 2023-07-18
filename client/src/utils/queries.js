@@ -19,3 +19,6 @@ export const QUERY_SINGLE_PROFILE = gql`
     }
   }
 `;
+
+export const GET_WORKOUT_HISTORY = gql`
+query`

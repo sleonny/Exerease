@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { SIGNUP_USER } from '../utils/mutations';
+import { ADD_PROFILE } from '../utils/mutations';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signup, { error, data }] = useMutation(SIGNUP_USER);
+  const [signup, { error, data }] = useMutation(ADD_PROFILE);
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);

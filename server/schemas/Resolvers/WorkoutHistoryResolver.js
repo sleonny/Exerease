@@ -5,7 +5,7 @@ const resolvers = {
     workoutHistory: async (parent, { id }, context) => {
       return await WorkoutHistory.findById(id);
     },
-    wokroutHistories: async (parent, args, context) => {
+    workoutHistories: async (parent, args, context) => {
       return await WorkoutHistory.find({});
     },
   },

@@ -1,20 +1,26 @@
 const { gql } = require("apollo-server-express");
 const { Goals } = require("../../models/Goals.js");
 
-
-const exerciseGoal_API = "https://api.api-ninjas.com/v1/exercises?type=";
-const goalResolvers = {
-    Query: {
-      
-      goals: async (parent, args, context) => {
-        
-        const { userId } = context;
-        const goals = await context.dataSources.exerciseGoal_API.getGoalsByUserId(userId);
-  
-        return goals;
-      },
+const resolvers = {
+  Query: {
+    WorkoutGoal: async (parent, { id }, context) => {
+      return await WorkoutGoal.findById(id);
     },
+    workoutGoals: async (parent, args, context) => {
+      return await WorkoutGoal.find({});
+    },
+  },
 
-  };
-  
-  module.exports = goalResolvers;
+  Mutation: {
+    createworkoutGoal: async (parent, { input }, context) => {
+      return await WorkoutGoal.create(input);
+    },
+    updateworkoutGoal: async (parent, { id, input }, context) => {
+      return await WorkoutGoal.findByIdAndUpdate(id, input, { new: true });
+    },
+    deleteworkoutGoal: async (parent, { id }, context) => {
+      return await WorkoutGoal.findByIdAndDelete(id);
+    },
+  },
+};
+module.exports = resolvers;
