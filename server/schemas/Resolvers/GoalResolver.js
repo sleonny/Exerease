@@ -3,7 +3,7 @@ const { Goals } = require("../../models/Goals.js");
 
 const resolvers = {
   Query: {
-    workoutGoal: async (parent, { id }, context) => {
+    WorkoutGoal: async (parent, { id }, context) => {
       return await WorkoutGoal.findById(id);
     },
     workoutGoals: async (parent, args, context) => {

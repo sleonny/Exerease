@@ -1,11 +1,7 @@
 const { gql } = require("apollo-server-express");
 const User = require("../../models/User.js"); // Corrected import
 
-<<<<<<< HEAD
 const userResolvers = {
-=======
-const resolvers = {
->>>>>>> main
   Query: {
     user: async (parent, args, context) => {
       const { userId } = args;
@@ -14,12 +10,6 @@ const resolvers = {
       return user;
     },
   },
-<<<<<<< HEAD
-};
-
-module.exports = userResolvers;
-=======
-
   Mutation: {
     addUser: async (parent, { input }, context) => {
       return await User.create(input);
@@ -33,5 +23,4 @@ module.exports = userResolvers;
   },
 };
 
-module.exports = resolvers;
->>>>>>> main
+module.exports = userResolvers;
