@@ -17,7 +17,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    
+    WorkoutGoal(id: ID!): WorkoutGoal
+    workoutGoals: [WorkoutGoal]
   }
 
   type Mutation {
