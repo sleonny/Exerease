@@ -11,8 +11,8 @@ const userResolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, { input }, context) => {
-      return await User.create(input);
+    addUser: async (parent, { user, name, email, password }, context) => {
+      return await User.create({ user, name, email, password });
     },
     updateUser: async (parent, { id, input }, context) => {
       return await User.findByIdAndUpdate(id, input, { new: true });
