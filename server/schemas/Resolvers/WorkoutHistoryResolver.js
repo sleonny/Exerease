@@ -11,13 +11,13 @@ const resolvers = {
   },
 
   Mutation: {
-    createworkoutHistory: async (parent, { input }, context) => {
+    createWorkoutHistory: async (parent, { input }, context) => {
       return await WorkoutHistory.create(input);
     },
-    updateworkoutHistory: async (parent, { id, input }, context) => {
+    updateWorkoutHistory: async (parent, { id, input }, context) => {
       return await WorkoutHistory.findByIdAndUpdate(id, input, { new: true });
     },
-    deleteworkoutHistory: async (parent, { id }, context) => {
+    deleteWorkoutHistory: async (parent, { id }, context) => {
       return await WorkoutHistory.findByIdAndDelete(id);
     },
   },
