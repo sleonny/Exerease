@@ -21,4 +21,13 @@ export const QUERY_SINGLE_PROFILE = gql`
 `;
 
 export const GET_WORKOUT_HISTORY = gql`
-query`
+  query WorkoutHistory($workoutHistoryId: ID!) {
+  workoutHistory(id: $workoutHistoryId) {
+    id
+    date
+    type
+    duration
+    calories
+  }
+}
+`

@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-import React from "react";
-import { useQuery } from "@apollo/client";
-=======
 import React, {useState} from 'react';
 import { useQuery } from '@apollo/client';
->>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
-<<<<<<< HEAD
-import { GET_WORKOUT_HISTORY } from "./graphql/queries"; // Import your GraphQL query
-=======
 import { GET_WORKOUT_HISTORY } from '../utils/queries'; 
->>>>>>> c9339f65521922aef63b44a5458fb1a047020c6a
 
 function WorkoutDashboard() {
   const [selectedDate, setSelectedDate] = useState(null);
