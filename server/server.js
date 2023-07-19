@@ -8,7 +8,7 @@ const { authMiddleWare } = require("./utils/auth")
 const { typeDefs, resolvers } = require("./schemas");
 
 // Set the port
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3001;
 // Setup Express
 const app = express();
 
