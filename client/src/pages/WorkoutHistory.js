@@ -22,3 +22,10 @@ function WorkoutHistoryPage() {
               cursor: "pointer",
             }}
           >
+            <p style={{ fontWeight: "bold" }}>{workout.name}</p>
+            <p>{workout.description}</p>
+            <p>Muscle Type: {workout.muscleType}</p>
+            <p>Duration: {workout.duration}</p>
+          </div>
+        ))}
+      </div>
