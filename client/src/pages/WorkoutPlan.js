@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_WORKOUT_PLANS, SEARCH_EXERCISES } from "./graphql/queries";
+import { GET_WORKOUT_PLANS, SEARCH_EXERCISES } from "../utils/queries";
 
 function WorkoutPage() {
   const [workoutPlans, setWorkoutPlans] = useState([]);

@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 
 function WorkoutHistory () {
   const [workoutHistory, setWorkoutHistory] = useState([]);
+  const [selectedWorkout, setSelectedWorkout] = useState(null);  // Add this line
+
   useEffect(() => {
   }, []);
-  const handleSelectWorkoutHistory = (selectedWorkout) => {
+
+  const handleSelectWorkoutHistory = (workout) => {
+    setSelectedWorkout(workout);  // Update selectedWorkout state here
   };
 
   return (

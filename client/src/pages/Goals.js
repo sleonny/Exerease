@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../graphql/mutations';
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
 
 const WorkoutGoalComponent = () => {
   const [workoutGoals, setWorkoutGoals] = useState([]);
@@ -25,10 +25,20 @@ const WorkoutGoalComponent = () => {
   // Rest of your component logic and JSX
 
   return (
-    <div style={{ background: 'url("/background-image.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh' }}>
-      <h2 style={{ textAlign: 'center' }}>Workout Goals</h2>
+    <div
+      style={{
+        background: 'url("/background-image.jpg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <h2 style={{ textAlign: "center" }}>Workout Goals</h2>
       {workoutGoals.map((goal) => (
-        <div key={goal._id} style={{ margin: '20px', background: '#ffffff', padding: '20px' }}>
+        <div
+          key={goal._id}
+          style={{ margin: "20px", background: "#ffffff", padding: "20px" }}
+        >
           <p>{goal.goal}</p>
           <p>Weight: {goal.weight}</p>
           <p>Total Body: {goal.totalBody}</p>
@@ -36,7 +46,12 @@ const WorkoutGoalComponent = () => {
           <p>Date: {goal.date}</p>
         </div>
       ))}
-      <Link to="/login" style={{ display: 'block', textAlign: 'center', marginTop: '20px' }}>Login</Link>
+      <Link
+        to="/login"
+        style={{ display: "block", textAlign: "center", marginTop: "20px" }}
+      >
+        Login
+      </Link>
     </div>
   );
 };
