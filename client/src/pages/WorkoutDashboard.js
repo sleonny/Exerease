@@ -1,14 +1,10 @@
-
 import React, {useState} from 'react';
 import { useQuery } from '@apollo/client';
-
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
-
 import { GET_WORKOUT_HISTORY } from '../utils/queries'; 
-
 
 function WorkoutDashboard() {
   const [selectedDate, setSelectedDate] = useState(null);

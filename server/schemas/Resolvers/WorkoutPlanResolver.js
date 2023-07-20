@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { WorkoutPlan } = require("../../models/WorkoutPlan.js");
 
 const EXERCISE_API = "https://api.api-ninjas.com/v1/exercises?muscle=";

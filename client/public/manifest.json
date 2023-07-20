@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+  
+=======
 {
     "short_name": "React App",
     "name": "Create React App Sample",
@@ -23,3 +27,4 @@
     "theme_color": "#000000",
     "background_color": "#ffffff"
   }
+>>>>>>> 03de54254a62c425d6476b0b9046e04999170388
