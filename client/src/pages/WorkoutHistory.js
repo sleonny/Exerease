@@ -41,3 +41,5 @@ function WorkoutHistoryPage() {
     </div>
   );
 }
+
+export default WorkoutHistoryPage;
