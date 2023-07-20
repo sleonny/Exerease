@@ -57,14 +57,16 @@ export const SEARCH_EXERCISES = gql`
 `;
 
 export const GET_USER = gql`
-  query user(userId: $userId) {
-    _id
-    user
-    name
-    email
-    password
+  query user($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      name
+      email
+      password
+    }
   }
-  `;
+`;
+
 export const GET_WORKOUTGOALS = gql`
   query GetAllWorkoutGoals {
     workoutGoals {
@@ -75,6 +77,15 @@ export const GET_WORKOUTGOALS = gql`
     }
   }
 `;
-
 export const GET_WORKOUT_PLANS = gql`
-guery`;
+  query GetWorkoutPlans {
+    workoutPlans {
+      id
+      name
+      description
+      muscleType
+      exercises
+      duration
+    }
+  }
+`;
