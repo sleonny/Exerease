@@ -14,6 +14,10 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Goals from './pages/Goals';
+import WorkoutDashboard from './pages/WorkoutDashboard';
+import WorkoutHistory from './pages/WorkoutHistory'
+import WorkoutPlan from './pages/WorkoutPlan'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -62,6 +66,22 @@ function App() {
               <Route 
                 path="/profiles/:profileId" 
                 element={<Profile />} 
+              />
+              <Route 
+                path="/goals" 
+                element={<Goals />} 
+              />
+              <Route 
+                path="/workoutdashboard" 
+                element={<WorkoutDashboard />} 
+              />
+              <Route 
+                path="/workouthistory" 
+                element={<WorkoutHistory />} 
+              />
+              <Route 
+                path="/workoutplan" 
+                element={<WorkoutPlan />} 
               />
             </Routes>
           </div>
