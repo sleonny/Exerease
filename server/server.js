@@ -1,27 +1,12 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
-<<<<<<< HEAD
-const path = require('path')
-const db = require("./config/connection");
-const { authMiddleWare } = require("./utils/auth")
-=======
->>>>>>> main
 
 
 // Import the two parts of a GraphQL schema
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
-<<<<<<< HEAD
-// Set the port
 const PORT = process.env.PORT || 3001;
-// Setup Express
-const app = express();
-
-// Setup the Apollo server
-=======
-const PORT = process.env.PORT || 3001;
->>>>>>> main
 const server = new ApolloServer({
   typeDefs,
   resolvers,
