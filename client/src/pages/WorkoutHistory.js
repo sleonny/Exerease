@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function WorkoutHistoryPage() {
+function WorkoutHistory () {
   const [workoutHistory, setWorkoutHistory] = useState([]);
   useEffect(() => {
   }, []);
@@ -42,4 +42,4 @@ function WorkoutHistoryPage() {
   );
 }
 
-export default WorkoutHistoryPage;
+export default WorkoutHistory;
