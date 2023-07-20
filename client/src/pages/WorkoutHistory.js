@@ -29,3 +29,15 @@ function WorkoutHistoryPage() {
           </div>
         ))}
       </div>
+      {selectedWorkout && (
+        <div>
+          <h2>Selected Workout</h2>
+          <p style={{ fontWeight: "bold" }}>{selectedWorkout.name}</p>
+          <p>{selectedWorkout.description}</p>
+          <p>Muscle Type: {selectedWorkout.muscleType}</p>
+          <p>Duration: {selectedWorkout.duration}</p>
+        </div>
+      )}
+    </div>
+  );
+}
