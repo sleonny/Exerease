@@ -1,26 +1,33 @@
 const { gql } = require("apollo-server-express");
-const { Goals } = require("../../models/Goals.js");
+const { workoutGoals } = require("../../models/Goals.js");
 
 const resolvers = {
   Query: {
     WorkoutGoal: async (parent, { id }, context) => {
-      return await WorkoutGoal.findById(id);
+      return await WorkoutGoals.findById(id);
     },
     workoutGoals: async (parent, args, context) => {
-      return await WorkoutGoal.find({});
+      return await WorkoutGoals.find({});
     },
   },
 
   Mutation: {
     createworkoutGoal: async (parent, { input }, context) => {
-      return await WorkoutGoal.create(input);
+      return await WorkoutGoals.create(input);
     },
     updateworkoutGoal: async (parent, { id, input }, context) => {
-      return await WorkoutGoal.findByIdAndUpdate(id, input, { new: true });
+      return await WorkoutGoals.findByIdAndUpdate(id, input, { new: true });
     },
     deleteworkoutGoal: async (parent, { id }, context) => {
-      return await WorkoutGoal.findByIdAndDelete(id);
+      return await WorkoutGoals.findByIdAndDelete(id);
     },
   },
 };
 module.exports = resolvers;
+
+
+
+
+
+
+

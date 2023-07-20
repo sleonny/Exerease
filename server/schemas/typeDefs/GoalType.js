@@ -9,6 +9,8 @@ const typeDefs = gql`
   }
 
   input WorkoutGoalInput {
+    goal: String
+    target: Int
     type: String
     date: String
     duration: Int
