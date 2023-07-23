@@ -55,9 +55,17 @@ export const CreateWorkoutPlan = ({ exerciseData }) => {
     description: "",
     muscleType: "",
     duration: "",
-    exercises: exerciseData,
+    exercises: [],
   });
-  const [createWorkoutPlan, { data }] = useMutation(CREATE_WORKOUT_PLAN);
+
+  useEffect(() => {
+    if (exerciseData) {
+      setNewPlan((prevPlan) => ({ ...prevPlan, exercises: exerciseData }));
+    }
+  }, [exerciseData]);
+
+  const [createWorkoutPlan, { data, error, loading }] =
+    useMutation(CREATE_WORKOUT_PLAN);
 
   const handleInputChange = (e) => {
     setNewPlan({ ...newPlan, [e.target.name]: e.target.value });
@@ -65,8 +73,20 @@ export const CreateWorkoutPlan = ({ exerciseData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    CreateWorkoutPlan({ variables: { input: newPlan } });
+    createWorkoutPlan({ variables: { input: newPlan } });
   };
+
+  if (loading) {
+    return <p>Creating...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  if (data) {
+    return <p>Workout plan created successfully!</p>;
+  }
 
   return (
     <div style={{ position: "absolute", top: "50%", left: "50%" }}>
