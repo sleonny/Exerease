@@ -133,8 +133,10 @@
 // export default WorkoutPage;
 
 import React, { useState } from "react";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { SEARCH_EXERCISES } from "../utils/queries";
+import { CREATE_WORKOUT_PLAN } from "../utils/mutations";
+import { useInternalState } from "@apollo/client/react/hooks/useQuery";
 
 export const SearchWorkoutPlan = () => {
   const [muscle, setMuscle] = useState("");
@@ -166,6 +168,40 @@ export const SearchWorkoutPlan = () => {
           </div>
         ))
       )}
+    </div>
+  );
+};
+
+export const CreateWorkoutPlan = () => {
+  const [newPlan, setNewPlan] = useState({
+    name: "",
+    description: "",
+    muscleType: "",
+    duration: "",
+  });
+  const [createWorkoutPlan, { data }] = useMutation(CREATE_WORKOUT_PLAN);
+
+  const handleInputChange = (e) => {
+    setNewPlan({ ...newPlan, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    CreateWorkoutPlan({ variables: { input: newPlan } });
+  };
+
+  return (
+    <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={newPlan.name}
+          onChange={handleInputChange}
+        />
+        <button type="submit">Create</button>
+      </form>
     </div>
   );
 };
