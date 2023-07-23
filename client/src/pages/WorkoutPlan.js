@@ -1,22 +1,30 @@
-import React, { useState } from "react";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import { SEARCH_EXERCISES, GET_WORKOUT_PLANS } from "../utils/queries";
-import { CREATE_WORKOUT_PLAN } from "../utils/mutations";
+import React, { useState, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
+import { SEARCH_EXERCISES } from "../utils/queries";
+import CreateWorkoutPlan from "./CreateWorkoutPlan";
 
 export const SearchWorkoutPlan = () => {
   const [muscle, setMuscle] = useState("");
   const [searchExercises, { loading, data, error }] =
     useLazyQuery(SEARCH_EXERCISES);
+  const [exerciseData, setExerciseData] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     searchExercises({ variables: { muscle } });
   };
 
+  useEffect(() => {
+    if (data) {
+      setExerciseData(data.searchExercises);
+    }
+  }, [data]);
+
   if (error) {
     return <p>Error: {error.message}</p>;
   }
 
+  // Pass exerciseData to CreateWorkoutPlan
   return (
     <div style={{ position: "absolute", top: "10%", left: "10%" }}>
       <form onSubmit={handleSubmit}>
@@ -31,23 +39,23 @@ export const SearchWorkoutPlan = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        data?.searchExercises.map((exercise, index) => (
-          <div key={index}>
-            <h4>{exercise.name}</h4>
-            <p>{exercise.instructions}</p>
+        exerciseData && (
+          <div>
+            <CreateWorkoutPlan exerciseData={exerciseData} />
           </div>
-        ))
+        )
       )}
     </div>
   );
 };
 
-export const CreateWorkoutPlan = () => {
+export const CreateWorkoutPlan = ({ exerciseData }) => {
   const [newPlan, setNewPlan] = useState({
     name: "",
     description: "",
     muscleType: "",
     duration: "",
+    exercises: exerciseData,
   });
   const [createWorkoutPlan, { data }] = useMutation(CREATE_WORKOUT_PLAN);
 
@@ -57,7 +65,7 @@ export const CreateWorkoutPlan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createWorkoutPlan({ variables: { input: newPlan } });
+    CreateWorkoutPlan({ variables: { input: newPlan } });
   };
 
   return (
