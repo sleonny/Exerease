@@ -144,4 +144,28 @@ export const SearchWorkoutPlan = () => {
     e.preventDefault();
     searchExercises({ variables: { muscle } });
   };
+
+  return (
+    <div style={{ position: "absolute", top: "10%", left: "10%" }}>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Search Muscle"
+          value={muscle}
+          onChange={(e) => setMuscle(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        data?.searchExercises.map((exercise, index) => (
+          <div key={index}>
+            <h4>{exercise.name}</h4>
+            <p>{exercise.instructions}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
 };
