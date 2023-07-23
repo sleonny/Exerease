@@ -105,20 +105,24 @@ export const CreateWorkoutPlan = ({ exerciseData }) => {
 };
 
 export const LoadSavedWorkoutPlan = () => {
-  const { loading, data } = useQuery(GET_WORKOUT_PLANS);
+  const { loading, data, error } = useQuery(GET_WORKOUT_PLANS);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div style={{ position: "absolute", top: "90%", right: "10%" }}>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        data?.workoutPlans.map((plan, index) => (
-          <div key={index}>
-            <h4>{plan.name}</h4>
-            <p>{plan.description}</p>
-          </div>
-        ))
-      )}
+      {data?.workoutPlans.map((plan) => (
+        <div key={plan.id || plan.name}>
+          <h4>{plan.name}</h4>
+          <p>{plan.description}</p>
+        </div>
+      ))}
     </div>
   );
 };
