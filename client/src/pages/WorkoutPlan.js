@@ -133,10 +133,11 @@
 // export default WorkoutPage;
 
 import React, { useState } from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { SEARCH_EXERCISES } from "../utils/queries";
 import { CREATE_WORKOUT_PLAN } from "../utils/mutations";
 import { useInternalState } from "@apollo/client/react/hooks/useQuery";
+import { GET_WORKOUT_PLANS } from "../utils/queries";
 
 export const SearchWorkoutPlan = () => {
   const [muscle, setMuscle] = useState("");
@@ -202,6 +203,25 @@ export const CreateWorkoutPlan = () => {
         />
         <button type="submit">Create</button>
       </form>
+    </div>
+  );
+};
+
+export const LoadSavedWorkoutPlan = () => {
+  const { loading, data } = useQuery(GET_WORKOUT_PLANS);
+
+  return (
+    <div style={{ position: "absolute", top: "90%", right: "10%" }}>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        data?.workoutPlans.map((plan, index) => (
+          <div key={index}>
+            <h4>{plan.name}</h4>
+            <p>{plan.description}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 };
