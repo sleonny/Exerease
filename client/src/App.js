@@ -16,8 +16,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Goals from './pages/Goals';
 import WorkoutDashboard from './pages/WorkoutDashboard';
-import WorkoutHistory from './pages/WorkoutHistory'
-import WorkoutPlan from './pages/WorkoutPlan';
+import WorkoutHistory from './pages/WorkoutHistory';
+import WorkoutPlan from './pages/WorkoutPlan';;
 
 
 // Construct our main GraphQL API endpoint
@@ -48,42 +48,26 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        <div
+          style={{
+            backgroundImage: 'url(/workout-background1.jpg)', 
+            backgroundSize: 'cover',
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
           <Header />
-          <div className="container">
+          <div style={{ flex: '1' }} className="container">
             <Routes>
-              <Route 
-                path="/" 
-                element={<Home />} 
-              />
-              <Route 
-                path="/login" 
-                element={<Login />} 
-              />
-              <Route 
-                path="/signup" 
-                element={<Signup />} 
-              />
-              <Route 
-                path="/profiles/:profileId" 
-                element={<Profile />} 
-              />
-              <Route 
-                path="/goals" 
-                element={<Goals />} 
-              />
-              <Route 
-                path="/workoutdashboard" 
-                element={<WorkoutDashboard />} 
-              />
-              <Route 
-                path="/workouthistory" 
-                element={<WorkoutHistory />} 
-              />
-              <Route 
-                path="/workoutplan" 
-                element={<WorkoutPlan />} 
-              />
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/profiles/:profileId" element={<Profile />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/workoutdashboard" element={<WorkoutDashboard />} />
+              <Route path="/workouthistory" element={<WorkoutHistory />} />
+              <Route path="/workoutplan" element={<WorkoutPlan />} />
             </Routes>
           </div>
           <Footer />
