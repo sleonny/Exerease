@@ -21,8 +21,8 @@ export const QUERY_SINGLE_PROFILE = gql`
 `;
 
 export const GET_WORKOUT_HISTORY = gql`
-  query GetWorkoutHistory($workoutHistoryId: ID!) {
-    workoutHistory(id: $workoutHistoryId) {
+  query GetWorkoutHistory {
+    workoutHistories {
       id
       date
       type
@@ -31,6 +31,7 @@ export const GET_WORKOUT_HISTORY = gql`
     }
   }
 `;
+
 
 export const GET_WORKOUT_GOAL = gql`
   query GetWorkoutGoal($workoutGoalId: ID!) {

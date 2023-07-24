@@ -66,8 +66,8 @@ function App() {
               <Route path="/profiles/:profileId" element={<Profile />} />
               <Route path="/goals" element={<Goals />} />
               <Route path="/workoutdashboard" element={<WorkoutDashboard />} />
-              <Route path="/workouthistory" element={<WorkoutHistory />} />
-              <Route path="/workoutplan" element={<WorkoutPlan />} />
+              <Route path="/WorkoutHistory" element={<WorkoutHistory />} />
+              <Route path="/WorkoutPlan" element={<WorkoutPlan />} />
             </Routes>
           </div>
           <Footer />

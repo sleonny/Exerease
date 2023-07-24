@@ -1,49 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { GET_WORKOUT_HISTORY } from "../utils/queries"; // Make sure you define the query in the graphql/queries.js file
 
-function WorkoutHistory () {
-  const [workoutHistory, setWorkoutHistory] = useState([]);
-  const [selectedWorkout, setSelectedWorkout] = useState(null);  // Add this line
+const WorkoutHistory = () => {
+  const { loading, error, data } = useQuery(GET_WORKOUT_HISTORY);
 
-  useEffect(() => {
-  }, []);
-
-  const handleSelectWorkoutHistory = (workout) => {
-    setSelectedWorkout(workout);  // Update selectedWorkout state here
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", margin: "2rem" }}>
+    <div>
       <h1>Workout History</h1>
+      <h2>Workout Data</h2>
       <div>
-        {workoutHistory.map((workout) => (
-          <div
-            key={workout.id}
-            onClick={() => handleSelectWorkoutHistory(workout)}
-            style={{
-              background: "#f4f4f4",
-              padding: "1rem",
-              marginBottom: "1rem",
-              cursor: "pointer",
-            }}
-          >
-            <p style={{ fontWeight: "bold" }}>{workout.name}</p>
-            <p>{workout.description}</p>
-            <p>Muscle Type: {workout.muscleType}</p>
-            <p>Duration: {workout.duration}</p>
-          </div>
-        ))}
+        <h3>Exercises:</h3>
+        <ul id="exercisesList">
+          {data.workoutHistories.map((history) => (
+            <li key={history.id}>
+              <p>Date: {history.date}</p>
+              <p>Type: {history.type}</p>
+              <p>Duration: {history.duration}</p>
+              <p>Calories: {history.calories}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-      {selectedWorkout && (
-        <div>
-          <h2>Selected Workout</h2>
-          <p style={{ fontWeight: "bold" }}>{selectedWorkout.name}</p>
-          <p>{selectedWorkout.description}</p>
-          <p>Muscle Type: {selectedWorkout.muscleType}</p>
-          <p>Duration: {selectedWorkout.duration}</p>
-        </div>
-      )}
     </div>
   );
-}
+};
 
 export default WorkoutHistory;
