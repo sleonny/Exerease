@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Mutations for adding and logging in a profile
 export const ADD_PROFILE = gql`
@@ -26,7 +26,12 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation AddUser($user: String!, $name: String!, $email: String!, $password: String!) {
+  mutation AddUser(
+    $user: String!
+    $name: String!
+    $email: String!
+    $password: String!
+  ) {
     addUser(user: $user, name: $name, email: $email, password: $password) {
       token
     }
@@ -105,8 +110,18 @@ export const UPDATE_WORKOUT_GOAL = gql`
 
 // Mutation for removing a user
 export const REMOVE_USER = gql`
-  mutation RemoveUser($userId: ID!, $name: String!, $email: String!, $password: String!) {
-    removeUser(userId: $userId, name: $name, email: $email, password: $password) {
+  mutation RemoveUser(
+    $userId: ID!
+    $name: String!
+    $email: String!
+    $password: String!
+  ) {
+    removeUser(
+      userId: $userId
+      name: $name
+      email: $email
+      password: $password
+    ) {
       _id
       user
       name
@@ -116,4 +131,44 @@ export const REMOVE_USER = gql`
   }
 `;
 
+export const ADD_WORKOUT_PLAN = gql`
+  mutation AddWorkoutPlan(
+    $name: String!
+    $description: String
+    $muscleType: String!
+    $exercises: [ExerciseInput]
+    $duration: String!
+  ) {
+    addWorkoutPlan(
+      name: $name
+      description: $description
+      muscleType: $muscleType
+      exercises: $exercises
+      duration: $duration
+    ) {
+      id
+      name
+      description
+      muscleType
+      exercises {
+        name
+        description
+        sets
+        reps
+        duration
+      }
+      duration
+    }
+  }
+`;
 
+// ExerciseInput type for use in ADD_WORKOUT_PLAN mutation
+export const ExerciseInput = gql`
+  input ExerciseInput {
+    name: String!
+    description: String
+    sets: Int
+    reps: Int
+    duration: Int
+  }
+`;

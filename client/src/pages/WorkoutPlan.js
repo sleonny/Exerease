@@ -127,29 +127,74 @@
 // };
 
 // File: pages/WorkoutPlan.js
-import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_WORKOUT_MUTATION } from "../graphql/mutations";
-import {
-  GET_WORKOUT_QUERY,
-  GET_FAVORITE_WORKOUTS_QUERY,
-} from "../graphql/queries";
+// File: pages/WorkoutPlan.js
+import React, { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import { CREATE_WORKOUT_MUTATION } from '../graphql/mutations';
+import { GET_WORKOUT_QUERY, GET_FAVORITE_WORKOUTS_QUERY } from '../graphql/queries';
 
+// Style
 const styles = {
-  createWorkoutPlanStyle: {
-    /* Style for CreateWorkoutPlan component */
-  },
-  loadWorkoutPlanStyle: {
-    /* Style for LoadWorkoutPlan component */
-  },
-  favoriteWorkoutPlansStyle: {
-    /* Style for FavoriteWorkoutPlans component */
-  },
+  createWorkoutPlanStyle: { /* Style for CreateWorkoutPlan component */ },
+  loadWorkoutPlanStyle: { /* Style for LoadWorkoutPlan component */ },
+  favoriteWorkoutPlansStyle: { /* Style for FavoriteWorkoutPlans component */ },
   // More styles can be added here...
 };
 
 const CreateWorkoutPlan = () => {
-  // Similar to what we had in previous components
+  const [workoutPlan, setWorkoutPlan] = useState({
+    name: '',
+    description: '',
+    muscleType: '',
+    exercises: [],
+    duration: '',
+  });
+  
+  // Add more states for exercises fields
+  const [exercise, setExercise] = useState({
+    name: '',
+    description: '',
+    sets: '',
+    reps: '',
+    duration: '',
+  });
+
+  const [createWorkout, { data }] = useMutation(CREATE_WORKOUT_MUTATION);
+
+  // handleInputChange for workout fields
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setWorkoutPlan({ ...workoutPlan, [name]: value });
+  };
+
+  // handleExerciseChange for exercises fields
+  const handleExerciseChange = (event) => {
+    const { name, value } = event.target;
+    setExercise({ ...exercise, [name]: value });
+  };
+
+  const handleAddExercise = () => {
+    setWorkoutPlan({...workoutPlan, exercises: [...workoutPlan.exercises, exercise]});
+    setExercise({
+      name: '',
+      description: '',
+      sets: '',
+      reps: '',
+      duration: '',
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await createWorkout({ variables: workoutPlan });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Return the form with all necessary fields
+  // TODO: Add actual form fields
 };
 
 const LoadWorkoutPlan = () => {

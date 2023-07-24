@@ -7,11 +7,14 @@ const typeDefs = gql`
     sets: Int
     reps: Int
     duration: Int
-    type: String
-    muscle: String
-    equipment: String
-    difficulty: String
-    instructions: String
+  }
+
+  input ExerciseInput {
+    name: String!
+    description: String
+    sets: Int
+    reps: Int
+    duration: Int
   }
 
   type WorkoutPlan {
@@ -36,6 +39,16 @@ const typeDefs = gql`
     workoutPlan(id: ID!): WorkoutPlan
     workoutPlans: [WorkoutPlan]
     searchExercises(muscle: String!): [ExternalExercise]
+  }
+
+  extend type Mutation {
+    addWorkoutPlan(
+      name: String!
+      description: String
+      muscleType: String!
+      exercises: [ExerciseInput]
+      duration: String!
+    ): WorkoutPlan
   }
 `;
 
