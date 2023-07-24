@@ -191,3 +191,25 @@ export const GET_WORKOUT_BY_NAME = gql`
     }
   }
 `;
+
+export const ADD_CONTACT_US_FORM = gql`
+  mutation SubmitContactUsForm(
+    $name: String!
+    $email: String!
+    $phone: String
+    $message: String!
+  ) {
+    submitContactUsForm(
+      name: $name
+      email: $email
+      phone: $phone
+      message: $message
+    ) {
+      name
+      email
+      phone
+      message
+      date
+    }
+  }
+`;
