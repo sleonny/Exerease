@@ -1,133 +1,273 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_WORKOUT_PLANS, SEARCH_EXERCISES } from "../utils/queries";
+import { useMutation, useQuery, gql } from "@apollo/client";
+import { GET_WORKOUT_PLANS } from "../utils/queries";
+import { ADD_WORKOUT_PLAN } from "../utils/mutations";
 
-function WorkoutPage() {
-  const [workoutPlans, setWorkoutPlans] = useState([]);
-  const [exercises, setExercises] = useState([]);
-  const [selectedWorkoutPlan, setSelectedWorkoutPlan] = useState(null);
-  const [selectedMuscle, setSelectedMuscle] = useState("");
-
-  const { loading: workoutPlansLoading, error: workoutPlansError, data: workoutPlansData } = useQuery(
-    GET_WORKOUT_PLANS
-  );
-
-  const { loading: exercisesLoading, error: exercisesError, data: exercisesData } = useQuery(SEARCH_EXERCISES, {
-    variables: { muscle: selectedMuscle },
+const WorkoutPlan = () => {
+  const [workoutPlan, setWorkoutPlan] = useState({
+    name: "",
+    description: "",
+    muscleType: "",
+    exercises: [],
+    duration: "",
   });
 
-  useEffect(() => {
-    if (workoutPlansData) {
-      setWorkoutPlans(workoutPlansData.workoutPlans);
-    }
-  }, [workoutPlansData]);
+  const [exercise, setExercise] = useState({
+    name: "",
+    description: "",
+    sets: 0,
+    reps: 0,
+    duration: 0,
+  });
 
-  useEffect(() => {
-    if (exercisesData) {
-      setExercises(exercisesData.searchExercises);
-    }
-  }, [exercisesData]);
+  const [addWorkoutPlan] = useMutation(ADD_WORKOUT_PLAN);
+  const { loading, error, data } = useQuery(GET_WORKOUT_PLANS);
 
-  const handleSelectMuscle = (muscle) => {
-    setSelectedMuscle(muscle);
+  // Declare selectedWorkoutPlan state variable and its setter function
+  const [selectedWorkoutPlan, setSelectedWorkoutPlan] = useState(null);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setWorkoutPlan({ ...workoutPlan, [name]: value });
   };
 
-  const handleSelectWorkoutPlan = (workoutPlan) => {
+  const handleExerciseChange = (event) => {
+    const { name, value, type } = event.target;
+    if (type === "number") {
+      setExercise({ ...exercise, [name]: parseInt(value) });
+    } else {
+      setExercise({ ...exercise, [name]: value });
+    }
+  };
+
+  const handleAddExercise = () => {
+    setWorkoutPlan({
+      ...workoutPlan,
+      exercises: [...exercise],
+    });
+    setExercise({ name: "", description: "", sets: 0, reps: 0, duration: 0 });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    try {
+      const workoutInfo = {
+        ...workoutPlan,
+      };
+      console.log(exercise);
+      workoutInfo.exercises.push(exercise);
+
+      console.log(workoutInfo);
+      setWorkoutPlan({
+        ...workoutInfo,
+      });
+
+      addWorkoutPlan({ variables: { ...workoutPlan } });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    handleSearch(event);
+  };
+
+  const handleWorkoutPlanClick = (workoutPlan) => {
     setSelectedWorkoutPlan(workoutPlan);
   };
 
-  if (workoutPlansLoading || exercisesLoading) return <p>Loading...</p>;
-  if (workoutPlansError || exercisesError) return <p>Error: {workoutPlansError || exercisesError.message}</p>;
-
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", margin: "2rem" }}>
-      <h1>Workout Page</h1>
-
-      <div>
-        <h2>Workout Plans</h2>
-        {workoutPlans.map((workoutPlan) => (
-          <div
-            key={workoutPlan.id}
-            onClick={() => handleSelectWorkoutPlan(workoutPlan)}
-            style={{
-              background: "#f4f4f4",
-              padding: "1rem",
-              marginBottom: "1rem",
-              cursor: "pointer",
-            }}
-          >
-            <p style={{ fontWeight: "bold" }}>{workoutPlan.name}</p>
-            <p>{workoutPlan.description}</p>
-            <p>Muscle Type: {workoutPlan.muscleType}</p>
-            <p>Duration: {workoutPlan.duration}</p>
+    <div
+      style={{
+        backgroundImage: "url('workout-background8.jpg')", // Assuming the image is in the public folder
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start", // Align children to the left
+          marginBottom: "2rem", // Add some margin at the bottom for spacing
+        }}
+      >
+        <h2 style={{ color: "white", fontSize: "2em", textAlign: "center" }}>
+          Create Workout Plan
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="name"
+              value={workoutPlan.name}
+              onChange={handleInputChange}
+              placeholder="Workout Name"
+            />
           </div>
-        ))}
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="description"
+              value={workoutPlan.description}
+              onChange={handleInputChange}
+              placeholder="Workout Description"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="muscleType"
+              value={workoutPlan.muscleType}
+              onChange={handleInputChange}
+              placeholder="Muscle Type"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="duration"
+              value={workoutPlan.duration}
+              onChange={handleInputChange}
+              placeholder="Workout Duration"
+            />
+          </div>
+
+          {/* Input fields for exercises */}
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="name"
+              value={exercise.name}
+              onChange={handleExerciseChange}
+              placeholder="Exercise Name"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              name="description"
+              value={exercise.description}
+              onChange={handleExerciseChange}
+              placeholder="Exercise Description"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="number"
+              name="sets"
+              value={parseInt(exercise.sets)}
+              onChange={handleExerciseChange}
+              placeholder="Sets"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="number"
+              name="reps"
+              value={parseInt(exercise.reps)}
+              onChange={handleExerciseChange}
+              placeholder="Reps"
+            />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <input
+              type="number"
+              name="duration"
+              value={parseInt(exercise.duration)}
+              onChange={handleExerciseChange}
+              placeholder="Exercise Duration"
+            />
+          </div>
+
+          <button type="button" onClick={handleAddExercise}>
+            Add Exercise
+          </button>
+          <button type="submit">Create Workout Plan</button>
+        </form>
       </div>
 
-      <div>
-        <h2>Exercises</h2>
-        <div>
-          <button onClick={() => handleSelectMuscle("chest")} style={{ marginRight: "1rem" }}>
-            Chest
-          </button>
-          <button onClick={() => handleSelectMuscle("back")} style={{ marginRight: "1rem" }}>
-            Back
-          </button>
-          <button onClick={() => handleSelectMuscle("legs")} style={{ marginRight: "1rem" }}>
-            Legs
-          </button>
-          {/* Add more buttons for other muscle types */}
-        </div>
-        <div>
-          {exercises.map((exercise) => (
-            <div
-              key={exercise.name}
+      <div style={{ flex: "1" }}>
+        <h2 style={{ color: "white", fontSize: "2em", textAlign: "center" }}>
+          Load Workout Plans
+        </h2>
+        <form onSubmit={handleSearch}>
+          {/* ... input fields for loading workout plan ... */}
+        </form>
+        {/* List of existing workout plans */}
+        <div
+          style={{
+            backgroundColor: "#ffffff",
+            padding: "1rem",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            marginBottom: "1rem",
+            width: "100%",
+            boxSizing: "border-box",
+            overflowY: "auto",
+            maxHeight: "200px",
+          }}
+        >
+          {loading ? (
+            "Loading..."
+          ) : error ? (
+            `Error! ${error.message}`
+          ) : (
+            <ul
               style={{
-                background: "#f4f4f4",
-                padding: "1rem",
-                marginBottom: "1rem",
+                listStyleType: "none",
+                padding: "0",
+                margin: "0",
               }}
             >
-              <p style={{ fontWeight: "bold" }}>{exercise.name}</p>
-              <p>Type: {exercise.type}</p>
-              <p>Muscle: {exercise.muscle}</p>
-              <p>Equipment: {exercise.equipment}</p>
-              <p>Difficulty: {exercise.difficulty}</p>
-              <p>Instructions: {exercise.instructions}</p>
-            </div>
-          ))}
+              {data.workoutPlans.map((workoutPlan) => (
+                <li
+                  key={workoutPlan.id}
+                  onClick={() => handleWorkoutPlanClick(workoutPlan)}
+                  style={{
+                    cursor: "pointer",
+                    marginBottom: "0.5rem",
+                    padding: "0.5rem",
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "5px",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {workoutPlan.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      </div>
 
-      {selectedWorkoutPlan && (
-        <div>
-          <h2>Selected Workout Plan</h2>
-          <p style={{ fontWeight: "bold" }}>{selectedWorkoutPlan.name}</p>
-          <p>{selectedWorkoutPlan.description}</p>
-          <p>Muscle Type: {selectedWorkoutPlan.muscleType}</p>
-          <p>Duration: {selectedWorkoutPlan.duration}</p>
-          {/* Render the exercises for the selected workout plan */}
-          {selectedWorkoutPlan.exercises.map((exercise) => (
-            <div
-              key={exercise.name}
-              style={{
-                background: "#f4f4f4",
-                padding: "1rem",
-                marginBottom: "1rem",
-              }}
-            >
-              <p style={{ fontWeight: "bold" }}>{exercise.name}</p>
-              <p>Description: {exercise.description}</p>
-              <p>Sets: {exercise.sets}</p>
-              <p>Reps: {exercise.reps}</p>
-              <p>Duration: {exercise.duration}</p>
-              {/* Render more exercise details */}
-            </div>
-          ))}
-        </div>
-      )}
+        {/* Display selected workout plan */}
+        {selectedWorkoutPlan && (
+          <div>
+            <h1>{selectedWorkoutPlan.name}</h1>
+            <p>{selectedWorkoutPlan.description}</p>
+            <p>{selectedWorkoutPlan.muscleType}</p>
+            <p>{selectedWorkoutPlan.duration}</p>
+            {selectedWorkoutPlan.exercises.map((exercise, index) => (
+              <div key={index}>
+                <h2>{exercise.name}</h2>
+                <p>{exercise.description}</p>
+                <p>Sets: {exercise.sets}</p>
+                <p>Reps: {exercise.reps}</p>
+                <p>Duration: {exercise.duration}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};
 
-export default WorkoutPage;
+export default WorkoutPlan;

@@ -17,7 +17,8 @@ import Footer from './components/Footer';
 import Goals from './pages/Goals';
 import WorkoutDashboard from './pages/WorkoutDashboard';
 import WorkoutHistory from './pages/WorkoutHistory';
-import WorkoutPlan from './pages/WorkoutPlan';
+import WorkoutPlan from './pages/WorkoutPlan';;
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
