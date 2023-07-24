@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const headerStyle = {
-    backgroundColor: "#f5f5f5",
+    backgroundImage: "linear-gradient(to right, rgb(78, 90, 101), rgb(217, 192, 63))",
     padding: "20px",
     display: "flex",
     alignItems: "center",
@@ -36,7 +36,7 @@ const Header = () => {
   return (
     <header style={headerStyle}>
       <div style={logoStyle}>
-        <h1>My Workout App</h1>
+        <h1>ExerEase - Workouts Designed For You</h1>
       </div>
       <nav style={navigationStyle}>
         <ul>
@@ -47,10 +47,13 @@ const Header = () => {
             <Link to="/exercise">Workout</Link>
           </li>
           <li style={navigationItemStyle}>
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile/:profileId">Profile</Link>
           </li>
           <li style={navigationItemStyle}>
             <Link to="/History">History</Link>
+          </li>
+          <li style={navigationItemStyle}>
+            <Link to="/WorkoutPlan">Workout Plan</Link>
           </li>
 
           {/* Rest of the navigation links */}
