@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery, gql } from "@apollo/client";
-import { useLazyQuery } from "@apollo/client";
 import { GET_WORKOUT_PLANS } from "../utils/queries";
 import { ADD_WORKOUT_PLAN } from "../utils/mutations";
 
@@ -33,22 +32,37 @@ const WorkoutPlan = () => {
   };
 
   const handleExerciseChange = (event) => {
-    const { name, value } = event.target;
-    setExercise({ ...exercise, [name]: value });
+    const { name, value, type } = event.target;
+    if (type === "number") {
+      setExercise({ ...exercise, [name]: parseInt(value) });
+    } else {
+      setExercise({ ...exercise, [name]: value });
+    }
   };
 
   const handleAddExercise = () => {
     setWorkoutPlan({
       ...workoutPlan,
-      exercises: [...workoutPlan.exercises, exercise],
+      exercises: [...exercise],
     });
     setExercise({ name: "", description: "", sets: 0, reps: 0, duration: 0 });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     try {
-      await addWorkoutPlan({ variables: { ...workoutPlan } });
+      const workoutInfo = {
+        ...workoutPlan,
+      };
+      console.log(exercise);
+      workoutInfo.exercises.push(exercise);
+
+      console.log(workoutInfo);
+      setWorkoutPlan({
+        ...workoutInfo,
+      });
+
+      addWorkoutPlan({ variables: { ...workoutPlan } });
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +144,7 @@ const WorkoutPlan = () => {
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="text"
-              name="exerciseName"
+              name="name"
               value={exercise.name}
               onChange={handleExerciseChange}
               placeholder="Exercise Name"
@@ -139,7 +153,7 @@ const WorkoutPlan = () => {
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="text"
-              name="exerciseDescription"
+              name="description"
               value={exercise.description}
               onChange={handleExerciseChange}
               placeholder="Exercise Description"
@@ -148,8 +162,8 @@ const WorkoutPlan = () => {
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="number"
-              name="exerciseSets"
-              value={exercise.sets}
+              name="sets"
+              value={parseInt(exercise.sets)}
               onChange={handleExerciseChange}
               placeholder="Sets"
             />
@@ -157,8 +171,8 @@ const WorkoutPlan = () => {
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="number"
-              name="exerciseReps"
-              value={exercise.reps}
+              name="reps"
+              value={parseInt(exercise.reps)}
               onChange={handleExerciseChange}
               placeholder="Reps"
             />
@@ -166,8 +180,8 @@ const WorkoutPlan = () => {
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="number"
-              name="exerciseDuration"
-              value={exercise.duration}
+              name="duration"
+              value={parseInt(exercise.duration)}
               onChange={handleExerciseChange}
               placeholder="Exercise Duration"
             />
