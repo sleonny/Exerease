@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from '../utils/auth';
+import AuthService from '../utils/auth';
 
-const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
+const Login = ({ setIsLogin }) => {
   const containerStyle = {
     maxWidth: '400px',
     margin: '0 auto',
@@ -12,9 +10,19 @@ const Login = () => {
     backgroundColor: '#f5f5f5',
     borderRadius: '5px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
-    backgroundImage: 'url(/workout-background.jpg)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+  };
+
+  const headerStyle = {
+    padding: '10px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '24px',
+    borderRadius: '5px 5px 0 0',
+  };
+
+  const bodyStyle = {
+    padding: '20px',
   };
 
   const inputStyle = {
@@ -37,47 +45,57 @@ const Login = () => {
     cursor: 'pointer',
   };
 
-  const handleLogout = () => {
-    Auth.logout();
+  const linkStyle = {
+    color: '#007bff',
+    cursor: 'pointer',
+    textDecoration: 'underline',
+  };
 
+  const handleLogout = () => {
+    AuthService.logout();
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Implement your login logic here
+    console.log('Login clicked');
   };
 
   return (
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div style={containerStyle}>
-          <div className="card-header bg-dark text-light p-2">
-            {isLogin ? 'Log In' : 'Sign Up'}
+          <div style={headerStyle}>
+            Log In
           </div>
-          <div className="card-body">
-            {isLogin ? (
+          <div style={bodyStyle}>
+            {AuthService.loggedIn() ? (
               <p>
-                Don't have an account?{' '}
-                <Link to="#" onClick={() => setIsLogin(false)}>
-                  Sign Up
-                </Link>
+                Logged in as {AuthService.getProfile().username}.{' '}
+                <button style={buttonStyle} onClick={handleLogout}>Logout</button>
               </p>
             ) : (
-              <p>
-                Already have an account?{' '}
-                <Link to="#" onClick={() => setIsLogin(true)}>
+              <form onSubmit={handleSubmit}>
+                <input
+                  style={inputStyle}
+                  type="email"
+                  placeholder="Your email"
+                />
+                <input
+                  style={inputStyle}
+                  type="password"
+                  placeholder="******"
+                />
+                <button style={buttonStyle} type="submit">
                   Log In
-                </Link>
-              </p>
-            )}
-
-            {Auth.loggedIn() ? (
-              <p>
-                Logged in as {Auth.getProfile().username}.{' '}
-                <button onClick={handleLogout}>Logout</button>
-              </p>
-            ) : (
-              <p>
-                Need to create an account?{' '}
-                <Link to="#" onClick={() => setIsLogin(false)}>
-                  Sign Up
-                </Link>
-              </p>
+                </button>
+                <p>
+                  Don't have an account?{' '}
+                  <Link to="/signup" style={linkStyle} onClick={() => setIsLogin(false)}>
+                    Sign Up
+                  </Link>
+                </p>
+              </form>
             )}
           </div>
         </div>
@@ -87,7 +105,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
