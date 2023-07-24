@@ -89,3 +89,24 @@ export const GET_WORKOUT_PLANS = gql`
     }
   }
 `;
+
+export const GET_WORKOUT_BY_NAME = gql`
+  query GetWorkoutByName($name: String!) {
+    getWorkoutByName(name: $name) {
+      id
+      name
+      description
+      exercises {
+        id
+        name
+        description
+      }
+    }
+  }
+`;
+
+
+
+
+
+

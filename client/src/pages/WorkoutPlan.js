@@ -129,36 +129,34 @@
 // File: pages/WorkoutPlan.js
 // File: pages/WorkoutPlan.js
 
-import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { ADD_WORKOUT_PLAN } from '../graphql/mutations';
-import { GET_WORKOUT_BY_NAME } from '../graphql/queries';
-import { WorkoutPlan } from '../../../server/models';
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_WORKOUT_PLAN } from "../utils/mutations";
+import { GET_WORKOUT_BY_NAME } from "../utils/queries";
 
-// Mock Styles
-const styles = {
-  createWorkoutPlanStyle: { /* Style for CreateWorkoutPlan component */ },
-  loadWorkoutPlanStyle: { /* Style for LoadWorkoutPlan component */ },
-};
-
-const CreateWorkoutPlan = () => {
+const WorkoutPlan = () => {
   const [workoutPlan, setWorkoutPlan] = useState({
-    name: '',
-    description: '',
-    muscleType: '',
+    name: "",
+    description: "",
+    muscleType: "",
     exercises: [],
-    duration: '',
+    duration: "",
   });
-  
+
   const [exercise, setExercise] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     sets: 0,
     reps: 0,
     duration: 0,
   });
 
   const [addWorkoutPlan] = useMutation(ADD_WORKOUT_PLAN);
+
+  // Define the query hook to fetch the workout plan by name
+  const { loading, error, data, refetch } = useQuery(GET_WORKOUT_BY_NAME, {
+    variables: { name: workoutPlan.name },
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -171,8 +169,11 @@ const CreateWorkoutPlan = () => {
   };
 
   const handleAddExercise = () => {
-    setWorkoutPlan({ ...workoutPlan, exercises: [...workoutPlan.exercises, exercise] });
-    setExercise({ name: '', description: '', sets: 0, reps: 0, duration: 0 });
+    setWorkoutPlan({
+      ...workoutPlan,
+      exercises: [...workoutPlan.exercises, exercise],
+    });
+    setExercise({ name: "", description: "", sets: 0, reps: 0, duration: 0 });
   };
 
   const handleSubmit = async (event) => {
@@ -184,68 +185,52 @@ const CreateWorkoutPlan = () => {
     }
   };
 
-  // The form for the input fields
-  return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" value={workoutPlan.name} onChange={handleInputChange} placeholder="Workout Name" />
-      <input type="text" name="description" value={workoutPlan.description} onChange={handleInputChange} placeholder="Workout Description" />
-      <input type="text" name="muscleType" value={workoutPlan.muscleType} onChange={handleInputChange} placeholder="Muscle Type" />
-      <input type="text" name="duration" value={workoutPlan.duration} onChange={handleInputChange} placeholder="Workout Duration" />
-      
-      <input type="text" name="name" value={exercise.name} onChange={handleExerciseChange} placeholder="Exercise Name" />
-      <input type="text" name="description" value={exercise.description} onChange={handleExerciseChange} placeholder="Exercise Description" />
-      <input type="number" name="sets" value={exercise.sets} onChange={handleExerciseChange} placeholder="Sets" />
-      <input type="number" name="reps" value={exercise.reps} onChange={handleExerciseChange} placeholder="Reps" />
-      <input type="number" name="duration" value={exercise.duration} onChange={handleExerciseChange} placeholder="Exercise Duration" />
-      
-      <button type="button" onClick={handleAddExercise}>Add Exercise</button>
-      <button type="submit">Create Workout Plan</button>
-    </form>
-  );
-};
-
-
-const LoadWorkoutPlan = () => {
-  const [workoutName, setWorkoutName] = useState("");
-  const { loading, error, data } = useQuery(GET_WORKOUT_BY_NAME, { variables: { name: workoutName } });
-
-  const handleChange = (event) => {
-    setWorkoutName(event.target.value);
-  };
-
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     event.preventDefault();
-    // The query will be automatically executed by Apollo when the state is updated
+    try {
+      // The query will be automatically executed by Apollo when the state is updated
+      // You can also refetch the data using the `refetch` function provided by the `useQuery` hook
+      await refetch();
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
 
   return (
     <div>
-      <form onSubmit={handleSearch}>
-        <input type="text" value={workoutName} onChange={handleChange} placeholder="Search Workout" />
-        <button type="submit">Search</button>
+      <h2>Create Workout Plan</h2>
+      <form onSubmit={handleSubmit}>
+        {/* ... input fields for creating workout plan ... */}
       </form>
-      {data && (
-        <div>
-          <h1>{data.workoutPlan.name}</h1>
-          <p>{data.workoutPlan.description}</p>
-          <p>{data.workoutPlan.muscleType}</p>
-          <p>{data.workoutPlan.duration}</p>
-          {data.workoutPlan.exercises.map((exercise, index) => (
-            <div key={index}>
-              <h2>{exercise.name}</h2>
-              <p>{exercise.description}</p>
-              <p>Sets: {exercise.sets}</p>
-              <p>Reps: {exercise.reps}</p>
-              <p>Duration: {exercise.duration}</p>
+
+      <h2>Load Workout Plan</h2>
+      <form onSubmit={handleSearch}>
+        {/* ... input fields for loading workout plan ... */}
+      </form>
+      {/* ... display loaded workout plan ... */}
+      {loading
+        ? "Loading..."
+        : error
+        ? `Error! ${error.message}`
+        : data && (
+            <div>
+              <h1>{data.workoutPlan.name}</h1>
+              <p>{data.workoutPlan.description}</p>
+              <p>{data.workoutPlan.muscleType}</p>
+              <p>{data.workoutPlan.duration}</p>
+              {data.workoutPlan.exercises.map((exercise, index) => (
+                <div key={index}>
+                  <h2>{exercise.name}</h2>
+                  <p>{exercise.description}</p>
+                  <p>Sets: {exercise.sets}</p>
+                  <p>Reps: {exercise.reps}</p>
+                  <p>Duration: {exercise.duration}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          )}
     </div>
   );
 };
 
-export default CreateWorkoutPlan; LoadWorkoutPlan;
+export default WorkoutPlan;
