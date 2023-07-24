@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery, gql } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { GET_WORKOUT_PLANS } from "../utils/queries";
 import { ADD_WORKOUT_PLAN } from "../utils/mutations";
 
@@ -55,13 +56,7 @@ const WorkoutPlan = () => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
-    try {
-      // The query will be automatically executed by Apollo when the state is updated
-      // You can also refetch the data using the `refetch` function provided by the `useQuery` hook
-      await refetch();
-    } catch (error) {
-      console.error(error);
-    }
+    handleSearch(event);
   };
 
   const handleWorkoutPlanClick = (workoutPlan) => {
