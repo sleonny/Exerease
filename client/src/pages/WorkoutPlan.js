@@ -133,6 +133,7 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { ADD_WORKOUT_PLAN } from '../graphql/mutations';
 import { GET_WORKOUT_BY_NAME } from '../graphql/queries';
+import { WorkoutPlan } from '../../../server/models';
 
 // Mock Styles
 const styles = {
@@ -183,10 +184,26 @@ const CreateWorkoutPlan = () => {
     }
   };
 
+  // The form for the input fields
   return (
-    // Replace with your form and UI components
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="name" value={workoutPlan.name} onChange={handleInputChange} placeholder="Workout Name" />
+      <input type="text" name="description" value={workoutPlan.description} onChange={handleInputChange} placeholder="Workout Description" />
+      <input type="text" name="muscleType" value={workoutPlan.muscleType} onChange={handleInputChange} placeholder="Muscle Type" />
+      <input type="text" name="duration" value={workoutPlan.duration} onChange={handleInputChange} placeholder="Workout Duration" />
+      
+      <input type="text" name="name" value={exercise.name} onChange={handleExerciseChange} placeholder="Exercise Name" />
+      <input type="text" name="description" value={exercise.description} onChange={handleExerciseChange} placeholder="Exercise Description" />
+      <input type="number" name="sets" value={exercise.sets} onChange={handleExerciseChange} placeholder="Sets" />
+      <input type="number" name="reps" value={exercise.reps} onChange={handleExerciseChange} placeholder="Reps" />
+      <input type="number" name="duration" value={exercise.duration} onChange={handleExerciseChange} placeholder="Exercise Duration" />
+      
+      <button type="button" onClick={handleAddExercise}>Add Exercise</button>
+      <button type="submit">Create Workout Plan</button>
+    </form>
   );
 };
+
 
 const LoadWorkoutPlan = () => {
   const [workoutName, setWorkoutName] = useState("");
@@ -205,21 +222,30 @@ const LoadWorkoutPlan = () => {
   if (error) return `Error! ${error.message}`;
 
   return (
-    // Replace with your form and UI components to display the workout plan
-  );
-};
-
-const WorkoutPlan = () => {
-  return (
     <div>
-      <div style={styles.createWorkoutPlanStyle}>
-        <CreateWorkoutPlan />
-      </div>
-      <div style={styles.loadWorkoutPlanStyle}>
-        <LoadWorkoutPlan />
-      </div>
+      <form onSubmit={handleSearch}>
+        <input type="text" value={workoutName} onChange={handleChange} placeholder="Search Workout" />
+        <button type="submit">Search</button>
+      </form>
+      {data && (
+        <div>
+          <h1>{data.workoutPlan.name}</h1>
+          <p>{data.workoutPlan.description}</p>
+          <p>{data.workoutPlan.muscleType}</p>
+          <p>{data.workoutPlan.duration}</p>
+          {data.workoutPlan.exercises.map((exercise, index) => (
+            <div key={index}>
+              <h2>{exercise.name}</h2>
+              <p>{exercise.description}</p>
+              <p>Sets: {exercise.sets}</p>
+              <p>Reps: {exercise.reps}</p>
+              <p>Duration: {exercise.duration}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default WorkoutPlan;
+export default CreateWorkoutPlan; LoadWorkoutPlan;
