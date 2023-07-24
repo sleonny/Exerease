@@ -85,7 +85,9 @@ const WorkoutPlan = () => {
           marginBottom: "2rem", // Add some margin at the bottom for spacing
         }}
       >
-        <h2>Create Workout Plan</h2>
+        <h2 style={{ color: "white", fontSize: "2em", textAlign: "center" }}>
+          Create Workout Plan
+        </h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "1rem" }}>
             <input
@@ -179,24 +181,50 @@ const WorkoutPlan = () => {
       </div>
 
       <div style={{ flex: "1" }}>
-        <h2>Load Workout Plan</h2>
+        <h2 style={{ color: "white", fontSize: "2em", textAlign: "center" }}>
+          Load Workout Plans
+        </h2>
         <form onSubmit={handleSearch}>
           {/* ... input fields for loading workout plan ... */}
         </form>
-
         {/* List of existing workout plans */}
-        <div>
+        <div
+          style={{
+            backgroundColor: "#ffffff",
+            padding: "1rem",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            marginBottom: "1rem",
+            width: "100%",
+            boxSizing: "border-box",
+            overflowY: "auto",
+            maxHeight: "200px",
+          }}
+        >
           {loading ? (
             "Loading..."
           ) : error ? (
             `Error! ${error.message}`
           ) : (
-            <ul>
+            <ul
+              style={{
+                listStyleType: "none",
+                padding: "0",
+                margin: "0",
+              }}
+            >
               {data.workoutPlans.map((workoutPlan) => (
                 <li
                   key={workoutPlan.id}
                   onClick={() => handleWorkoutPlanClick(workoutPlan)}
-                  style={{ cursor: "pointer", marginBottom: "0.5rem" }}
+                  style={{
+                    cursor: "pointer",
+                    marginBottom: "0.5rem",
+                    padding: "0.5rem",
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "5px",
+                    marginBottom: "0.5rem",
+                  }}
                 >
                   {workoutPlan.name}
                 </li>
