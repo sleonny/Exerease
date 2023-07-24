@@ -197,7 +197,19 @@ const WorkoutPlan = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: "url('../../workout-background8.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh", // Ensure the background covers the entire viewport height
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+      }}
+    >
       <h2>Create Workout Plan</h2>
       <form onSubmit={handleSubmit}>
         {/* ... input fields for creating workout plan ... */}
