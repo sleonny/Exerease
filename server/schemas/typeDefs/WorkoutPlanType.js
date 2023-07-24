@@ -39,6 +39,7 @@ const typeDefs = gql`
     workoutPlan(id: ID!): WorkoutPlan
     workoutPlans: [WorkoutPlan]
     searchExercises(muscle: String!): [ExternalExercise]
+    workoutPlanByName(name: String!): WorkoutPlan
   }
 
   extend type Mutation {

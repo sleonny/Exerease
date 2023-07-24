@@ -8,10 +8,23 @@ const resolvers = {
     workoutPlans: async (parent, args, context) => {
       return await WorkoutPlan.find({});
     },
+    workoutPlanByName: async (parent, { name }, context) => {
+      return await WorkoutPlan.findOne({ name });
+    },
   },
   Mutation: {
-    addWorkoutPlan: async (parent, { name, description, muscleType, exercises, duration }, context) => {
-      const newWorkoutPlan = new WorkoutPlan({ name, description, muscleType, exercises, duration });
+    addWorkoutPlan: async (
+      parent,
+      { name, description, muscleType, exercises, duration },
+      context
+    ) => {
+      const newWorkoutPlan = new WorkoutPlan({
+        name,
+        description,
+        muscleType,
+        exercises,
+        duration,
+      });
       return await newWorkoutPlan.save();
     },
     // Add additional mutation resolvers for update and delete if needed

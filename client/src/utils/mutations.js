@@ -172,3 +172,22 @@ export const ExerciseInput = gql`
     duration: Int
   }
 `;
+
+export const GET_WORKOUT_BY_NAME = gql`
+  query WorkoutPlanByName($name: String!) {
+    workoutPlanByName(name: $name) {
+      id
+      name
+      description
+      muscleType
+      exercises {
+        name
+        description
+        sets
+        reps
+        duration
+      }
+      duration
+    }
+  }
+`;

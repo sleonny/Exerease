@@ -128,17 +128,16 @@
 
 // File: pages/WorkoutPlan.js
 // File: pages/WorkoutPlan.js
+
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_WORKOUT_MUTATION } from '../graphql/mutations';
-import { GET_WORKOUT_QUERY, GET_FAVORITE_WORKOUTS_QUERY } from '../graphql/queries';
+import { ADD_WORKOUT_PLAN } from '../graphql/mutations';
+import { GET_WORKOUT_BY_NAME } from '../graphql/queries';
 
-// Style
+// Mock Styles
 const styles = {
   createWorkoutPlanStyle: { /* Style for CreateWorkoutPlan component */ },
   loadWorkoutPlanStyle: { /* Style for LoadWorkoutPlan component */ },
-  favoriteWorkoutPlansStyle: { /* Style for FavoriteWorkoutPlans component */ },
-  // More styles can be added here...
 };
 
 const CreateWorkoutPlan = () => {
@@ -150,59 +149,64 @@ const CreateWorkoutPlan = () => {
     duration: '',
   });
   
-  // Add more states for exercises fields
   const [exercise, setExercise] = useState({
     name: '',
     description: '',
-    sets: '',
-    reps: '',
-    duration: '',
+    sets: 0,
+    reps: 0,
+    duration: 0,
   });
 
-  const [createWorkout, { data }] = useMutation(CREATE_WORKOUT_MUTATION);
+  const [addWorkoutPlan] = useMutation(ADD_WORKOUT_PLAN);
 
-  // handleInputChange for workout fields
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setWorkoutPlan({ ...workoutPlan, [name]: value });
   };
 
-  // handleExerciseChange for exercises fields
   const handleExerciseChange = (event) => {
     const { name, value } = event.target;
     setExercise({ ...exercise, [name]: value });
   };
 
   const handleAddExercise = () => {
-    setWorkoutPlan({...workoutPlan, exercises: [...workoutPlan.exercises, exercise]});
-    setExercise({
-      name: '',
-      description: '',
-      sets: '',
-      reps: '',
-      duration: '',
-    });
+    setWorkoutPlan({ ...workoutPlan, exercises: [...workoutPlan.exercises, exercise] });
+    setExercise({ name: '', description: '', sets: 0, reps: 0, duration: 0 });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await createWorkout({ variables: workoutPlan });
+      await addWorkoutPlan({ variables: { ...workoutPlan } });
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Return the form with all necessary fields
-  // TODO: Add actual form fields
+  return (
+    // Replace with your form and UI components
+  );
 };
 
 const LoadWorkoutPlan = () => {
-  // Similar to what we had in previous components
-};
+  const [workoutName, setWorkoutName] = useState("");
+  const { loading, error, data } = useQuery(GET_WORKOUT_BY_NAME, { variables: { name: workoutName } });
 
-const FavoriteWorkoutPlans = () => {
-  // Similar to what we had in previous components
+  const handleChange = (event) => {
+    setWorkoutName(event.target.value);
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    // The query will be automatically executed by Apollo when the state is updated
+  };
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  return (
+    // Replace with your form and UI components to display the workout plan
+  );
 };
 
 const WorkoutPlan = () => {
@@ -213,9 +217,6 @@ const WorkoutPlan = () => {
       </div>
       <div style={styles.loadWorkoutPlanStyle}>
         <LoadWorkoutPlan />
-      </div>
-      <div style={styles.favoriteWorkoutPlansStyle}>
-        <FavoriteWorkoutPlans />
       </div>
     </div>
   );
