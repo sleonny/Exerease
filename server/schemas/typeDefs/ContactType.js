@@ -19,4 +19,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = contactUsTypeDefs;
+module.exports = typeDefs;

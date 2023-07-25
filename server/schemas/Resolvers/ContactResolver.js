@@ -1,6 +1,6 @@
 const ContactUs = require("../../models/ContactUs");
 
-const contactUsResolvers = {
+const resolvers = {
   Mutation: {
     submitContactUsForm: async (_, { name, email, phone, message }) => {
       try {
@@ -21,4 +21,4 @@ const contactUsResolvers = {
   },
 };
 
-module.exports = contactUsResolvers;
+module.exports = resolvers;

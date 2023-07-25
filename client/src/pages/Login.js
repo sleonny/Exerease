@@ -5,7 +5,8 @@ import AuthService from '../utils/auth';
 const Login = ({ setIsLogin }) => {
   const containerStyle = {
     maxWidth: '400px',
-    margin: '0 auto',
+    margin: '0',
+    marginTop: '100px',
     padding: '20px',
     backgroundColor: '#f5f5f5',
     borderRadius: '5px',
