@@ -4,7 +4,7 @@ import { GET_WORKOUT_HISTORY } from "../utils/queries"; // Make sure you define 
 
 const WorkoutHistory = () => {
   const { loading, error, data } = useQuery(GET_WORKOUT_HISTORY);
-
+  console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
