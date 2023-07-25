@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
+
 const WorkoutGoalComponent = () => {
   const [workoutGoals, setWorkoutGoals] = useState([]);
 
