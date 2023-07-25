@@ -1,9 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const headerStyle = {
-    backgroundImage: "linear-gradient(to right, rgb(78, 90, 101), rgb(217, 192, 63))",
+    backgroundImage:
+      "linear-gradient(to right, rgb(78, 90, 101), rgb(217, 192, 63))",
     padding: "20px",
     display: "flex",
     alignItems: "center",
@@ -57,7 +58,7 @@ const Header = () => {
             <Link to="/profile/:profileId">Profile</Link>
           </li>
           <li style={navigationItemStyle}>
-            <Link to="/WorkoutHistory">History</Link>
+            <Link to="/contactus">Contact Us</Link>
           </li>
           <li style={navigationItemStyle}>
             <Link to="/WorkoutPlan">Workout Plan</Link>
