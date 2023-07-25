@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_PROFILE } from '../utils/mutations';
+import { LOGIN_USER } from '../utils/mutations';
+import AuthService from '../utils/auth';
 
-import Auth from '../utils/auth'
-
-const SignupForm = ({ setIsLogin }) => {
+const Login = ({ setIsLogin }) => {
   const containerStyle = {
     maxWidth: '400px',
     margin: '0 auto',
@@ -54,87 +53,82 @@ const SignupForm = ({ setIsLogin }) => {
     textDecoration: 'underline',
   };
 
-  const [signup, { error, data }] = useMutation(ADD_PROFILE);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
-  const [formState, setFormState] = useState({
-    user:'',
-    name: '',
-    email: '',
-    password: '',
-  });
-
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+  const handleLogout = () => {
+    AuthService.logout();
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
 
     try {
-      const { data } = await signup({
-        variables: { ...formState },
-      });
+      const { data } = await loginUser({ variables: { email, password } });
+      const token = data.login.token;
+      // Assuming the login mutation returns a token upon successful login
+      // Save the token in localStorage or a state management library like Redux
+      // Implement AuthService.setToken(token) or something similar
+      AuthService.setToken(token);
 
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
+      // Perform any other necessary actions upon successful login
+      console.log('Logged in successfully!');
+    } catch (error) {
+      // Handle login errors here
+      console.error('Login error:', error.message);
     }
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        Sign Up
+    <main className="flex-row justify-center mb-4">
+      <div className="col-12 col-lg-10">
+        <div style={containerStyle}>
+          <div style={headerStyle}>
+            Log In
+          </div>
+          <div style={bodyStyle}>
+            {AuthService.loggedIn() ? (
+              <React.Fragment>
+                <p>
+                  Logged in as {AuthService.getProfile().username}.{' '}
+                  <button style={buttonStyle} onClick={handleLogout}>Logout</button>
+                </p>
+                {/* Add any additional content you want to display when logged in */}
+              </React.Fragment>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <input
+                  style={inputStyle}
+                  type="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  style={inputStyle}
+                  type="password"
+                  placeholder="******"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button style={buttonStyle} type="submit">
+                  Log In
+                </button>
+                <p>
+                  Don't have an account?{' '}
+                  <Link to="/signup" style={linkStyle} onClick={() => setIsLogin(false)}>
+                    Sign Up
+                  </Link>
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
-      <form onSubmit={handleFormSubmit}>
-      <input
-          style={inputStyle}
-          type="text"
-          placeholder="username"
-          name='user'
-          onChange={handleChange}
-        />
-      <input
-          style={inputStyle}
-          type="text"
-          placeholder="your name"
-          name='name'
-          onChange={handleChange}
-        />
-        <input
-          style={inputStyle}
-          type="email"
-          placeholder="Your email"
-          name='email'
-          onChange={handleChange}
-        />
-        <input
-          style={inputStyle}
-          type="password"
-          placeholder="******"
-          name='password'
-          onChange={handleChange}
-        />
-        <button style={buttonStyle} type="submit">Sign Up</button>
-      </form>
-
-      {/* Toggle between "Log In" and "Sign Up" forms */}
-      <p>
-        Already have an account?{' '}
-        <Link to="/login" style={linkStyle} onClick={() => setIsLogin(true)}>
-          Log In
-        </Link>
-      </p>
-    </div>
+    </main>
   );
 };
 
-export default SignupForm;
+export default Login;
 

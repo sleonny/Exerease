@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server-express");
 const User = require("../../models/User.js"); // Corrected import
 const jwt = require("jsonwebtoken"); // import jsonwebtoken
+const bcrypt = require("bcrypt");
 
 const userResolvers = {
   Query: {
