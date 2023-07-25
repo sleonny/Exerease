@@ -1,6 +1,15 @@
 const ContactUs = require("../../models/ContactUs");
 
 const resolvers = {
+  Query: {
+    getContactUsForms: async () => {
+      try {
+        return await ContactUs.find({});
+      } catch (error) {
+        throw new Error("Failed to fetch forms.");
+      }
+    },
+  },
   Mutation: {
     submitContactUsForm: async (_, { name, email, phone, message }) => {
       try {

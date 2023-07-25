@@ -66,6 +66,9 @@ const WorkoutPlan = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        backgroundImage: "url('../../background-image8.jpg')", // Add this line
+        backgroundSize: 'contain', // Add this line
+        backgroundPosition: 'tile' // Add this line
       }}
     >
       <h2>Create Workout Plan</h2>

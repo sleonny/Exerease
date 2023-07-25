@@ -67,6 +67,7 @@ function App() {
               <Route path="/workoutdashboard" element={<WorkoutDashboard />} />
               <Route path="/WorkoutHistory" element={<WorkoutHistory />} />
               <Route path="/WorkoutPlan" element={<WorkoutPlan />} />
+              <Route path="/contactus" element={<ContactUsForm />} />
             </Routes>
           </div>
           <Footer />

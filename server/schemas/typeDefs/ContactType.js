@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type ContactUs {
@@ -6,7 +6,11 @@ const typeDefs = gql`
     email: String!
     phone: String
     message: String!
-    date: Date!
+    date: String!
+  }
+
+  type Query {
+    getContactUsForms: [ContactUs]
   }
 
   type Mutation {
