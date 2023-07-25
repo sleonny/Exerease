@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_PROFILE } from '../utils/mutations';
 
+import Auth from '../utils/auth'
+
 const SignupForm = ({ setIsLogin }) => {
   const containerStyle = {
     maxWidth: '400px',
@@ -52,35 +54,38 @@ const SignupForm = ({ setIsLogin }) => {
     textDecoration: 'underline',
   };
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [signup, { error, data }] = useMutation(ADD_PROFILE);
 
-  const handleChangeEmail = (event) => {
-    setEmail(event.target.value);
+  const [formState, setFormState] = useState({
+    user:'',
+    name: '',
+    email: '',
+    password: '',
+  });
+
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
+    console.log(formState);
 
     try {
       const { data } = await signup({
-        variables: { email, password },
+        variables: { ...formState },
       });
 
-      // Handle successful signup
-      console.log(data);
+      Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
-
-    // Clear form values
-    setEmail('');
-    setPassword('');
   };
 
   return (
@@ -88,20 +93,34 @@ const SignupForm = ({ setIsLogin }) => {
       <div style={headerStyle}>
         Sign Up
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
+      <input
+          style={inputStyle}
+          type="text"
+          placeholder="username"
+          name='user'
+          onChange={handleChange}
+        />
+      <input
+          style={inputStyle}
+          type="text"
+          placeholder="your name"
+          name='name'
+          onChange={handleChange}
+        />
         <input
           style={inputStyle}
           type="email"
           placeholder="Your email"
-          value={email}
-          onChange={handleChangeEmail}
+          name='email'
+          onChange={handleChange}
         />
         <input
           style={inputStyle}
           type="password"
           placeholder="******"
-          value={password}
-          onChange={handleChangePassword}
+          name='password'
+          onChange={handleChange}
         />
         <button style={buttonStyle} type="submit">Sign Up</button>
       </form>
