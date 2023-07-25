@@ -9,18 +9,18 @@ const workoutPlan = new Schema({
   },
   description: {
     type: String,
-    required: false,
+    required: true,
   },
   muscleType: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   exercises: [
     {
       name: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
       },
       description: {
@@ -44,7 +44,7 @@ const workoutPlan = new Schema({
   ],
   duration: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 

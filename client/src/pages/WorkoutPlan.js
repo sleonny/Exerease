@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_WORKOUT_PLAN } from "../utils/mutations";
+import { GET_WORKOUT_PLANS } from "../utils/queries";
 
 const WorkoutPlan = () => {
   const [workoutPlan, setWorkoutPlan] = useState({
@@ -18,6 +19,11 @@ const WorkoutPlan = () => {
     reps: 0,
     duration: 0,
   });
+
+  const { loading, error, data } = useQuery(GET_WORKOUT_PLANS);
+  console.log("Data from server:", data);
+  console.log("Loading state:", loading);
+  console.log("Error state:", error);
 
   const [addWorkoutPlan] = useMutation(ADD_WORKOUT_PLAN);
 
@@ -54,7 +60,14 @@ const WorkoutPlan = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <h2>Create Workout Plan</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "1rem" }}>
@@ -146,6 +159,33 @@ const WorkoutPlan = () => {
         </button>
         <button type="submit">Create Workout Plan</button>
       </form>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {!loading &&
+          data?.workoutPlans?.map((workoutPlan) => (
+            <div
+              key={workoutPlan.id}
+              style={{
+                color: "white",
+                flex: "0 1 calc(33.33% - 20px)",
+                margin: "10px",
+                padding: "10px",
+                textAlign: "center",
+                boxSizing: "border-box",
+                border: "1px solid white",
+              }}
+            >
+              <h3 style={{ fontWeight: "bold" }}>{workoutPlan.name}</h3>
+              <p style={{ fontWeight: "bold" }}>{workoutPlan.description}</p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

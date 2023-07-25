@@ -32,7 +32,6 @@ export const GET_WORKOUT_HISTORY = gql`
   }
 `;
 
-
 export const GET_WORKOUT_GOAL = gql`
   query GetWorkoutGoal($workoutGoalId: ID!) {
     WorkoutGoal(id: $workoutGoalId) {
@@ -85,7 +84,13 @@ export const GET_WORKOUT_PLANS = gql`
       name
       description
       muscleType
-      exercises
+      exercises {
+        name
+        description
+        sets
+        reps
+        duration
+      }
       duration
     }
   }
@@ -105,9 +110,3 @@ export const GET_WORKOUT_BY_NAME = gql`
     }
   }
 `;
-
-
-
-
-
-
