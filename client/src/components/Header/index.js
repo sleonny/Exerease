@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 
 const Header = () => {
   const headerStyle = {
@@ -10,6 +8,8 @@ const Header = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    color: "#fff",
+    fontWeight: "bold",
   };
 
   const logoStyle = {
@@ -26,11 +26,18 @@ const Header = () => {
   const navigationStyle = {
     listStyle: "none",
     display: "flex",
+    padding: "0",
+    margin: "0",
   };
 
   const navigationItemStyle = {
-    marginRight: "10px",
+    marginRight: "20px",
     cursor: "pointer",
+    color: "#fff",
+    textDecoration: "none",
+    fontSize: "18px",
+    fontWeight: "bold",
+    textTransform: "uppercase",
   };
 
   return (
@@ -38,8 +45,8 @@ const Header = () => {
       <div style={logoStyle}>
         <h1>ExerEase - Workouts Designed For You</h1>
       </div>
-      <nav style={navigationStyle}>
-        <ul>
+      <nav>
+        <ul style={navigationStyle}>
           <li style={navigationItemStyle}>
             <Link to="/">Home</Link>
           </li>
@@ -50,12 +57,11 @@ const Header = () => {
             <Link to="/profile/:profileId">Profile</Link>
           </li>
           <li style={navigationItemStyle}>
-            <Link to="/History">History</Link>
+            <Link to="/WorkoutHistory">History</Link>
           </li>
           <li style={navigationItemStyle}>
             <Link to="/WorkoutPlan">Workout Plan</Link>
           </li>
-
           {/* Rest of the navigation links */}
         </ul>
       </nav>
