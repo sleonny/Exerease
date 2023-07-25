@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthService from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
-
+import Auth from '../utils/auth'
 
 const Login = ({ setIsLogin }) => {
   const containerStyle = {
@@ -56,14 +56,31 @@ const Login = ({ setIsLogin }) => {
     textDecoration: 'underline',
   };
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
+
   const handleLogout = () => {
     AuthService.logout();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Implement your login logic here
-    console.log('Login clicked');
+console.log(email, password);
+    try {
+      const { data } = await loginUser({ variables: { email, password } });
+      const token = data.login.token;
+      // Assuming the login mutation returns a token upon successful login
+      // Save the token in localStorage or a state management library like Redux
+      // Implement AuthService.setToken(token) or something similar
+      AuthService.setToken(token);
+
+      // Perform any other necessary actions upon successful login
+      console.log('Logged in successfully!');
+    } catch (error) {
+      // Handle login errors here
+      console.error('Login error:', error.message);
+    }
   };
 
   return (
@@ -75,21 +92,28 @@ const Login = ({ setIsLogin }) => {
           </div>
           <div style={bodyStyle}>
             {AuthService.loggedIn() ? (
-              <p>
-                Logged in as {AuthService.getProfile().username}.{' '}
-                <button style={buttonStyle} onClick={handleLogout}>Logout</button>
-              </p>
+              <React.Fragment>
+                <p>
+                  Logged in as {AuthService.getProfile().username}.{' '}
+                  <button style={buttonStyle} onClick={handleLogout}>Logout</button>
+                </p>
+                {/* Add any additional content you want to display when logged in */}
+              </React.Fragment>
             ) : (
               <form onSubmit={handleSubmit}>
                 <input
                   style={inputStyle}
                   type="email"
                   placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                   style={inputStyle}
                   type="password"
                   placeholder="******"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <button style={buttonStyle} type="submit">
                   Log In
