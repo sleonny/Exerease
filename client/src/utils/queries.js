@@ -10,6 +10,17 @@ export const QUERY_PROFILES = gql`
   }
 `;
 
+export const GET_USERS = gql`
+  query GetUsers {
+    users {
+      _id
+      email
+      password
+      user
+    }
+  }
+`;
+
 export const QUERY_SINGLE_PROFILE = gql`
   query singleProfile($profileId: ID!) {
     profile(profileId: $profileId) {

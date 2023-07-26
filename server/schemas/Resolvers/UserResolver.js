@@ -11,6 +11,11 @@ const userResolvers = {
 
       return user;
     },
+
+    users: async (parent, args, context) => {
+      const users = await User.find({}); // find all users
+      return users;
+    },
   },
   Mutation: {
     addUser: async (parent, { user, name, email, password }, context) => {
